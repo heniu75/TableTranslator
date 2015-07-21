@@ -21,11 +21,15 @@ namespace TableTranslator.Model
         {
             if (this.ColumnConfigurations.Any(cc => cc.Ordinal == config.Ordinal))
             {
-                throw new TableTranslatorConfigurationException("Duplicate ordinal value.", this.TranslationProfile);
+                throw new TableTranslatorConfigurationException(
+                    string.Format("Duplicate ordinal value ({0}). This translation already has a column configuration with this ordinal.", config.Ordinal),
+                    this.TranslationProfile);
             }
             if (this.ColumnConfigurations.Any(cc => cc.ColumnName == config.ColumnName))
             {
-                throw new TableTranslatorConfigurationException("Duplicate column name.", this.TranslationProfile);
+                throw new TableTranslatorConfigurationException(
+                    string.Format("Duplicate column name ({0}). This translation already has a column configuration with this column name.", config.ColumnName),
+                    this.TranslationProfile);
             }
             this.ColumnConfigurations.Add(config);
         }

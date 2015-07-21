@@ -22,12 +22,12 @@ namespace TableTranslator.Model.Settings
 
             if (delegateParameters.Count() != 1)
             {
-                throw new TableTranslatorConfigurationException("Delegate must have one parameter.");
+                throw new TableTranslatorConfigurationException("Delegate must take exactly one parameter.");
             }
 
             if (delegateReturnType == typeof(void))
             {
-                throw new TableTranslatorConfigurationException("Delegate must return data.");
+                throw new TableTranslatorConfigurationException("Delegate must return a value (cannot be void).");
             }
 
             this.DelegateFunction = delegateFunction;

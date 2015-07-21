@@ -52,11 +52,11 @@ namespace TableTranslator
             }
             if (string.IsNullOrEmpty(translationProfile.ProfileName))
             {
-                throw new TableTranslatorConfigurationException("Profile must have a name.");
+                throw new TableTranslatorConfigurationException("Translation profile must have a name.");
             }
             if (GetProfile(translationProfile.ProfileName) != null)
             {
-                throw new TableTranslatorConfigurationException("Profile already added.");
+                throw new TableTranslatorConfigurationException(string.Format("This translation profile ({0}) already added.", translationProfile.ProfileName));
             }
 
             this._profiles.Add(translationProfile.ProfileName, translationProfile);

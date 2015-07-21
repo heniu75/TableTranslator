@@ -23,21 +23,18 @@ namespace TableTranslator.Test.SimpleValueColumnConfiguration_Test.SadPath
             Assert.Throws<ArgumentNullException>(() => new SimpleValueColumnConfiguration("Hello", null, 0, "ColumnName", DBNull.Value));
         }
 
-        [TestCase("A String", typeof(string), 1)]
-        [TestCase("A String", typeof(int), "Another String")]
-        [TestCase(1, typeof(int), "A string")]
-        [TestCase(1, typeof(bool), "A string")]
         [Test]
-        public void Objects_and_output_types_must_match_otherwise_throw_TableTranslationConfigurationException(object value, Type outputType, object nullReplacement)
+        public void Value_type_and_output_types_must_match_otherwise_throw_TableTranslationConfigurationException()
         {
-            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration(value, outputType, 0, "ColumnName", nullReplacement));
+            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A String", typeof(int), 0, "ColumnName", null),
+                "The output type must be of the same type as the value provided.");
         }
 
         [Test]
-        public void Value_and_output_type_must_match_when_null_replacement_is_not_populated_otherwise_throw_TableTranslationConfigurationException()
+        public void Value_and_output_type_must_match_otherwise_throw_TableTranslationConfigurationException()
         {
-            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A string", typeof(int), 0, "ColumnName", null));
-            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A string", typeof(int), 0, "ColumnName", DBNull.Value));
+            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A string", typeof(int), 0, "ColumnName", null),
+                "The output type must be of the same type as the value provided.");
         }
     }
 }

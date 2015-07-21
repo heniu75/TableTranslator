@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using TableTranslator.Abstract;
 using TableTranslator.Model;
+using TableTranslator.Model.ColumnConfigurations;
 using TableTranslator.Model.Settings;
 
 namespace TableTranslator
@@ -14,23 +15,15 @@ namespace TableTranslator
     {
         public void Initialize(IEnumerable<InitializedTranslation> translations)
         {
-            foreach (var t in translations)
+            foreach (var trans in translations)
             {
-                var table = new DataTable(t.TranslationSettings.TranslationName);
+                var table = new DataTable(trans.TranslationSettings.TranslationName);
 
-                foreach (var config in t.ColumnConfigurations.OrderBy(x => x.Ordinal))
+                foreach (var colConfig in trans.ColumnConfigurations.OrderBy(x => x.Ordinal))
                 {
-                    var underlyingNullableType = Nullable.GetUnderlyingType(config.OutputType);
-                    var column = new DataColumn(
-                        BuildFullColumnName(config.ColumnName, t), 
-                        underlyingNullableType ?? config.OutputType)
-                    {
-                        // string can be null even though it doesn't implement Nullable<> and is a value type
-                        AllowDBNull = underlyingNullableType != null || !config.OutputType.IsValueType || config.OutputType == typeof(string)
-                    };
-                    table.Columns.Add(column);
+                    table.Columns.Add(BuildDataColumn(trans, colConfig));
                 }
-                t.Structure = table;
+                trans.Structure = table;
             }
         }
 
@@ -78,6 +71,20 @@ namespace TableTranslator
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private static DataColumn BuildDataColumn(TranslationBase translation, ColumnConfigurationBase colConfig)
+        {
+            // will get the "true" type for nullable types (e.g. int?, DateTime?, etc.), otherwise it will be null
+            var underlyingTypeOfNullableType = Nullable.GetUnderlyingType(colConfig.OutputType);
+
+            return new DataColumn(
+                BuildFullColumnName(colConfig.ColumnName, translation),
+                underlyingTypeOfNullableType ?? colConfig.OutputType)
+            {
+                // string can be null even though it doesn't implement Nullable<> and is a value type
+                AllowDBNull = underlyingTypeOfNullableType != null || !colConfig.OutputType.IsValueType || colConfig.OutputType == typeof(string)
+            };
         }
 
         private static string BuildFullColumnName(string columnName, TranslationBase translation)

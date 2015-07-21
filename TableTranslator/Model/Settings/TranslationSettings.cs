@@ -5,8 +5,8 @@ namespace TableTranslator.Model.Settings
     public sealed class TranslationSettings : ICloneable<TranslationSettings>
     {
         public string TranslationName { get; internal set; }
-        public string ColumnNamePrefix { get; internal set; }
-        public string ColumnNameSuffix { get; internal set; }
+        public string ColumnNamePrefix { get; private set; }
+        public string ColumnNameSuffix { get; private set; }
 
         public TranslationSettings(string translationName = "", string columnNamePrefix = "", string columnNameSuffix = "")
         {

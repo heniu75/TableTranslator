@@ -25,28 +25,29 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         [Test]
         public void Null_or_empty_profile_name_throws_TableTranslationConfigurationException()
         {
+            const string errorMessage = "Translation profile must have a name.";
             var nullNameProfile = new NullNameProfile();
             var emptyNameProfile = new EmptyNameProfile();
 
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile(nullNameProfile));
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile(emptyNameProfile));
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile(nullNameProfile), errorMessage);
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile(emptyNameProfile), errorMessage);
 
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile<NullNameProfile>());
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile<EmptyNameProfile>());
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile<NullNameProfile>(), errorMessage);
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.AddProfile<EmptyNameProfile>(), errorMessage);
         }
 
         [Test]
         public void Adding_duplicate_profiles_throws_TableTranslationConfigurationException()
         {
             Translator.AddProfile<DefaultNameProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(Translator.AddProfile<DefaultNameProfile>);
+            Assert.Throws<TableTranslatorConfigurationException>(Translator.AddProfile<DefaultNameProfile>, "This translation profile (DefaultNameProfile) already added.");
         }
 
         [Test]
         public void Adding_profiles_with_same_name_throws_TableTranslationConfigurationException()
         {
             Translator.AddProfile<DupeProfile1>();
-            Assert.Throws<TableTranslatorConfigurationException>(Translator.AddProfile<DupeProfile2>);
+            Assert.Throws<TableTranslatorConfigurationException>(Translator.AddProfile<DupeProfile2>, "This translation profile (Duplicate Profile Name) already added.");
         }
 
         [Test]

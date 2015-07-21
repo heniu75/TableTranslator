@@ -50,7 +50,7 @@ namespace TableTranslator.Model.ColumnConfigurations
 
             if (this.NullReplacement != null && this.NullReplacement != DBNull.Value && this.DelegateSettings.OutputType != base.NullReplacement.GetType())
             {
-                throw new TableTranslatorConfigurationException();
+                throw new TableTranslatorConfigurationException("Null replacement for delegate must be either of the same type as the delegate's return type, null, or DBNull.");
             }
         }
     }

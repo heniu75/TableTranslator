@@ -43,12 +43,12 @@ namespace TableTranslator.Model.ColumnConfigurations
 
             if (this._value != null && this._value.GetType() != this._outputType)
             {
-                throw new TableTranslatorConfigurationException();
+                throw new TableTranslatorConfigurationException("The output type must be of the same type as the value provided.");
             }
 
             if (base.NullReplacement != null && base.NullReplacement != DBNull.Value && base.NullReplacement.GetType() != this._outputType)
             {
-                throw new TableTranslatorConfigurationException();
+                throw new TableTranslatorConfigurationException("Null replacement for simple value must be either of the same type as the value provided, null, or DBNull.");
             }
         }
     }

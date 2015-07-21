@@ -58,7 +58,7 @@ namespace TableTranslator.Model.ColumnConfigurations
 
             if (this.NullReplacement != null && base.NullReplacement != DBNull.Value && this.MemberInfo.GetMemberType() != base.NullReplacement.GetType())
             {
-                throw new TableTranslatorConfigurationException();
+                throw new TableTranslatorConfigurationException("Null replacement for member must be either of the same type as the member, null, or DBNull.");
             }
 
             if (string.IsNullOrEmpty(this.RelativePropertyPath))

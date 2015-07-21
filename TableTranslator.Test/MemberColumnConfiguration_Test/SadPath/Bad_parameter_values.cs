@@ -50,7 +50,9 @@ namespace TableTranslator.Test.MemberColumnConfiguration_Test.SadPath
         [Test]
         public void Member_info_type_and_nonnull_null_replacement_type_must_match_otherwise_throw_TableTranslationConfigurationException()
         {
-            Assert.Throws<TableTranslatorConfigurationException>(() => new MemberColumnConfiguration(this._memberInfo, 0, "ColumnName", new DateTime(), this._memberInfo.Name));
+            Assert.Throws<TableTranslatorConfigurationException>(
+                () => new MemberColumnConfiguration(this._memberInfo, 0, "ColumnName", new DateTime(), this._memberInfo.Name),
+                "Null replacement for member must be either of the same type as the member, null, or DBNull.");
         }
 
         [Test]

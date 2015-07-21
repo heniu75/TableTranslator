@@ -30,7 +30,6 @@ namespace TableTranslator.Model
 
         protected internal TranslationExpression<T> AddTranslation<T>() where T : new()
         {
-            if (typeof(T).IsNullableValueType()) throw new TableTranslatorConfigurationException("Type for translation cannot be for an object that is a nullable value type.");
             return AddTranslation<T>(new TranslationSettings());
         }
 

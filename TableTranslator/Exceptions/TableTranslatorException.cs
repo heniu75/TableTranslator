@@ -7,11 +7,6 @@ namespace TableTranslator.Exceptions
     [Serializable]
     public class TableTranslatorException : Exception
     {
-        internal TableTranslatorException()
-        {
-            
-        }
-
         internal TableTranslatorException(string message)
             : base(message)
         {
