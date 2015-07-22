@@ -26,15 +26,13 @@ namespace TableTranslator.Test.SimpleValueColumnConfiguration_Test.SadPath
         [Test]
         public void Value_type_and_output_types_must_match_otherwise_throw_TableTranslationConfigurationException()
         {
-            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A String", typeof(int), 0, "ColumnName", null),
-                "The output type must be of the same type as the value provided.");
+            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A String", typeof(int), 0, "ColumnName", null));
         }
 
         [Test]
         public void Value_and_output_type_must_match_otherwise_throw_TableTranslationConfigurationException()
         {
-            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A string", typeof(int), 0, "ColumnName", null),
-                "The output type must be of the same type as the value provided.");
+            Assert.Throws<TableTranslatorConfigurationException>(() => new SimpleValueColumnConfiguration("A string", typeof(int), 0, "ColumnName", null));
         }
     }
 }

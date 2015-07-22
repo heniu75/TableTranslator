@@ -84,24 +84,21 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         public void Duplicate_column_ordinal_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeOrdinalProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize(),
-                "Duplicate ordinal value (0). This translation already has a column configuration with this ordinal.");
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize());
         }
 
         [Test]
         public void Explicit_column_name_matching_default_column_name_for_member_config_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeExplicitMemberColumnNameProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize(),
-                "Duplicate column name (PublicProperty). This translation already has a column configuration with this column name.");
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize());
         }
 
         [Test]
         public void Explicit_column_name_matching_default_column_name_for_non_member_config_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeExplicitNonMemberColumnNameProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize(),
-                "Duplicate column name (Column0). This translation already has a column configuration with this column name.");
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize());
         }
 
         [Test]

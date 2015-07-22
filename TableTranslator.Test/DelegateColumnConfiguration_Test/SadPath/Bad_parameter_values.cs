@@ -37,8 +37,7 @@ namespace TableTranslator.Test.DelegateColumnConfiguration_Test.SadPath
         public void Delegate_return_type_and_nonnull_null_replacement_type_must_match_otherwise_throw_TableTranslationConfigurationException()
         {
             Assert.Throws<TableTranslatorConfigurationException>(
-                () => new DelegateColumnConfiguration(this._delegateSettings, 0, "ColumnName", new DateTime()),
-                "Null replacement for delegate must be either of the same type as the delegate's return type, null, or DBNull.");
+                () => new DelegateColumnConfiguration(this._delegateSettings, 0, "ColumnName", new DateTime()));
         }
 
         [Test]

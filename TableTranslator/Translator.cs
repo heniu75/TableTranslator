@@ -150,7 +150,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("Must initialize first");
+            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
             return _engine.TranslateToDataTable(_store.SingleInitializedTranslation<T, K>(), source);
         }
 
@@ -158,7 +158,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("Must initialize first");
+            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
             return _engine.TranslateToDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
         }
 
@@ -166,7 +166,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("Must initialize first");
+            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
             return _engine.TranslateToDbParameter(_store.SingleInitializedTranslation<T, K>(), source, dbParameterSettings);
         }
 
@@ -174,7 +174,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("Must initialize first");
+            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
             return _engine.TranslateToDbParameter(_store.SingleInitializedTranslation<T, K>(translationName), source, dbParameterSettings);
         }
 

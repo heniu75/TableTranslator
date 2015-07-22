@@ -22,8 +22,7 @@ namespace TableTranslator.Test.DelegateSettings_Test.SadPath
         [Test]
         public void Delegate_that_returns_void_throws_TableTranslationConfigurationException()
         {
-            Assert.Throws<TableTranslatorConfigurationException>(() => new DelegateSettings(new VoidDelegate(str => { })),
-                "Delegate must return a value (cannot be void).");
+            Assert.Throws<TableTranslatorConfigurationException>(() => new DelegateSettings(new VoidDelegate(str => { })));
         }
 
         [Test]
