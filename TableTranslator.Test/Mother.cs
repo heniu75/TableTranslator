@@ -1,26 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using TableTranslator.Test.TestModels;
 
 namespace TableTranslator.Test
 {
-    public static class TestHelper
-    {
-        public static List<string> GetColumnNames(this DataTable table)
-        {
-            if (table == null)
-            {
-                return new List<string>();
-            }
-
-            return table.Columns.Cast<DataColumn>()
-                .OrderBy(x => x.Ordinal)
-                .Select(x => x.ColumnName).ToList();
-        }
-    }
-
     public static class Mother
     {
         public static IntInAndOutDelegate IntInAndOutDelegate()

@@ -9,7 +9,7 @@ using TableTranslator.Test.TestModels.Profiles;
 namespace TableTranslator.Test.Translator_Test
 {
     [TestFixture]
-    public class Translate_to_DT
+    public class Translate_to_DT : InitializedTranslatorTestBase
     {
         private readonly List<TestPerson> people = new List<TestPerson>
         {
@@ -17,17 +17,6 @@ namespace TableTranslator.Test.Translator_Test
             new TestPerson {PublicProperty = "Aubrey", PublicField = 101},
             new TestPerson {PublicProperty = "John", PublicField = 102}
         };
-
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
 
         [Test]
         public void Translate_to_DT_number_of_rows()

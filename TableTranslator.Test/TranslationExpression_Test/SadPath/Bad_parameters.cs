@@ -1,28 +1,18 @@
 ﻿using System;
 using NUnit.Framework;
 using TableTranslator.Model;
+using TableTranslator.Test.Translator_Test;
 
 namespace TableTranslator.Test.TranslationExpression_Test.SadPath
 {
     [TestFixture]
-    public class Bad_parameters
+    public class Bad_parameters : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
         [Test]
         public void Null_passed_to_AddColumnConfiguration_throws_ArgumentNullException()
         {
             Translator.AddProfile<AddColumnConfigurationNullProfile>();
-            Assert.Throws<ArgumentNullException>(() => Translator.Initialize());
+            Assert.Throws<ArgumentNullException>(() => Translator.ApplyUpdates());
         }
 
         private class AddColumnConfigurationNullProfile : TranslationProfile

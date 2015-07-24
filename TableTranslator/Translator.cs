@@ -28,7 +28,8 @@ namespace TableTranslator
 
         public static void Initialize()
         {
-            var initializedTranlations = _store.Initialize();
+            if (IsInitialized) throw new TableTranslatorException("Table translator has already been initialized");
+            var initializedTranlations = _store.Initialize(true);
             _engine.Initialize(initializedTranlations);
             IsInitialized = true;
         }
@@ -37,7 +38,14 @@ namespace TableTranslator
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling ApplyUpdates().");
             // currently just calls Initialize(), but separating it here for future enhancements (e.g. translation updates, column config updates, etc.)
-            Initialize();
+            var initializedTranlations = _store.Initialize(false);
+            _engine.Initialize(initializedTranlations);
+        }
+
+        public static void UnloadAll()
+        {
+            _store.UnloadAll();
+            IsInitialized = false;
         }
 
         #region add profiles

@@ -27,11 +27,9 @@ namespace TableTranslator
             this._initializedProfiles.CollectionChanged += CascadeInitializedProfileChanges;
         }
 
-        public IEnumerable<InitializedTranslation> Initialize()
+        public IEnumerable<InitializedTranslation> Initialize(bool fullReset)
         {
-            this._initializedProfiles.Clear();
-            this._profiles.RemoveAll((s, p) => p.TranslationProfileState == TranslationProfileState.RemovalPending);
-            this._translations.Clear();
+            ClearProfilesAndTranslations(false);
 
             this._profiles.ToList().ForEach(x =>
             {
@@ -42,6 +40,18 @@ namespace TableTranslator
             this._translations.ToList().ForEach(x => this._initializedTranslations.Add(x.Key.ShallowClone(), InitializedTranslation.CreateInstance(x.Value)));
 
             return this._initializedTranslations.Values;
+        }
+
+        public void UnloadAll()
+        {
+            ClearProfilesAndTranslations(true);
+        }
+
+        private void ClearProfilesAndTranslations(bool fullReset)
+        {
+            this._initializedProfiles.Clear();
+            this._translations.Clear();
+            this._profiles.RemoveAll((s, p) => fullReset || p.TranslationProfileState == TranslationProfileState.RemovalPending);
         }
 
         public void AddProfile(TranslationProfile translationProfile)

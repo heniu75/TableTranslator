@@ -60,6 +60,7 @@
     <Compile Include="Mother.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleValueColumnConfiguration_Test\Get_value_correctly.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="TestModels\Generics.cs" />
     <Compile Include="TestModels\Profiles\BasicProfile.cs" />
     <Compile Include="TestModels\Profiles\BasicProfile2.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="Translator_Test\SadPath\Profile_sad_path.cs" />
     <Compile Include="Translator_Test\SadPath\Translate_to_DT_sad_path.cs" />
     <Compile Include="Translator_Test\SadPath\Translation_sad_path.cs" />
+    <Compile Include="Translator_Test\Translator_initialize_and_unload.cs" />
     <Compile Include="Translator_Test\SadPath\Translator_sad_path.cs" />
+    <Compile Include="InitializedTranslatorTestBase.cs" />
     <Compile Include="Translator_Test\Translate_data_results.cs" />
     <Compile Include="Translator_Test\Translate_to_DT.cs" />
   </ItemGroup>

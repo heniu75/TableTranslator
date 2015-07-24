@@ -8,14 +8,8 @@ using TableTranslator.Test.TestModels.Profiles;
 namespace TableTranslator.Test.Translator_Test.SadPath
 {
     [TestFixture]
-    public class Profile_sad_path
+    public class Profile_sad_path : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            Translator.RemoveAllProfiles();
-        }
-
         [Test]
         public void Null_profile_passed_to_add_profile_throws_TableTranslationException()
         {

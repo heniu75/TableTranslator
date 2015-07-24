@@ -9,19 +9,8 @@ using TableTranslator.Test.TestModels.Profiles;
 namespace TableTranslator.Test.Translator_Test.SadPath
 {
     [TestFixture]
-    public class Translation_sad_path
+    public class Translation_sad_path : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
         [Test]
         public void Get_all_translations_returns_empty_collection_if_not_initialized()
         {
@@ -32,7 +21,6 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         [Test]
         public void Get_profile_translations_returns_empty_collection_if_profile_not_added()
         {
-            Translator.Initialize();
             var translations = Translator.GetProfileTranslations<BasicProfile>();
             CollectionAssert.IsEmpty(translations);
         }
@@ -40,7 +28,6 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         [Test]
         public void Get_profile_translations_for_type_returns_empty_collection_if_profile_not_added()
         {
-            Translator.Initialize();
             var translations = Translator.GetProfileTranslationsForType<BasicProfile, TestPerson>();
             CollectionAssert.IsEmpty(translations);
         }
@@ -49,7 +36,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         public void Get_profile_translations_for_type_returns_empty_collection_if_profile_does_not_have_translation_for_the_type()
         {
             Translator.AddProfile<BasicProfile2>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var translations = Translator.GetProfileTranslationsForType<BasicProfile, TestParent>();
             CollectionAssert.IsEmpty(translations);
         }
@@ -57,7 +44,6 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         [Test]
         public void Get_specific_profile_translations_returns_null_if_profile_not_added()
         {
-            Translator.Initialize();
             var translation = Translator.GetProfileTranslation<BasicProfile, TestParent>("Translation3");
             Assert.IsNull(translation);
         }
@@ -66,7 +52,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         public void Get_specific_profile_translations_returns_null_if_profile_does_not_have_translation_for_the_type()
         {
             Translator.AddProfile<BasicProfile2>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var translation = Translator.GetProfileTranslation<BasicProfile, TestParent>("Translation4");
             Assert.IsNull(translation);
         }
@@ -75,7 +61,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         public void Get_specific_profile_translations_returns_null_if_profile_does_not_have_translation_for_the_type_and_name()
         {
             Translator.AddProfile<BasicProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var translation = Translator.GetProfileTranslation<BasicProfile, TestParent>("WrongName");
             Assert.IsNull(translation);
         }
@@ -84,21 +70,21 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         public void Duplicate_column_ordinal_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeOrdinalProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize());
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.ApplyUpdates());
         }
 
         [Test]
         public void Explicit_column_name_matching_default_column_name_for_member_config_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeExplicitMemberColumnNameProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize());
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.ApplyUpdates());
         }
 
         [Test]
         public void Explicit_column_name_matching_default_column_name_for_non_member_config_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeExplicitNonMemberColumnNameProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.Initialize());
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.ApplyUpdates());
         }
 
         [Test]

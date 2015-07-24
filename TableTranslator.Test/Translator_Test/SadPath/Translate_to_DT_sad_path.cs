@@ -10,31 +10,13 @@ using TableTranslator.Test.TestModels.Profiles;
 namespace TableTranslator.Test.Translator_Test.SadPath
 {
     [TestFixture]
-    public class Translate_to_DT_sad_path
+    public class Translate_to_DT_sad_path : InitializedTranslatorTestBase
     {
         private readonly List<TestPerson> people = new List<TestPerson>
         {
             new TestPerson {PublicProperty = "Chris", PublicField = 100},
             new TestPerson {PublicProperty = "Aubrey", PublicField = 101}
         };
-
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
-        // CKTODO: this isn't really being tested. 
-        //[Test]
-        //public void Translate_to_DT_throws_TableTranslatorException_when_attempting_to_translate_before_initialization()
-        //{
-        //    Assert.Throws<TableTranslatorException>(() => Translator.TranslateToDataTable<BasicProfile, TestPerson>(this.people, "Bad Name"));
-        //}
 
         [Test]
         public void Translate_to_DT_throws_TableTranslatorException_when_no_matching_translation_is_found()

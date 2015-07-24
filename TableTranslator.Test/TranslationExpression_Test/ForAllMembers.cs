@@ -4,28 +4,18 @@ using System.Reflection;
 using NUnit.Framework;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
+using TableTranslator.Test.Translator_Test;
 
 namespace TableTranslator.Test.TranslationExpression_Test
 {
     [TestFixture]
-    public class ForAllMembers
+    public class ForAllMembers : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
         [Test]
         public void All_Members()
         {
             Translator.AddProfile<AllMembersProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var colName = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "All").GetColumnNames();
             CollectionAssert.Contains(colName, "Age");
             CollectionAssert.Contains(colName, "Name");
@@ -37,7 +27,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         public void All_Members_With_Predicate()
         {
             Translator.AddProfile<AllMembersProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var colName = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllWithMPredicate").GetColumnNames();
             CollectionAssert.Contains(colName, "Name");
             CollectionAssert.Contains(colName, "IsMale");
@@ -48,7 +38,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         public void All_Members_With_Orderer()
         {
             Translator.AddProfile<AllMembersProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var colNames = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllByNameDesc").GetColumnNames();
             Assert.AreEqual("Name", colNames[0]);
             Assert.AreEqual("IsMale", colNames[1]);
@@ -59,7 +49,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         public void All_Members_With_Binding_Flags()
         {
             Translator.AddProfile<AllMembersProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var colNames = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllNoStaticBindingFlags").GetColumnNames();
             CollectionAssert.Contains(colNames, "Name");
             CollectionAssert.Contains(colNames, "Age");

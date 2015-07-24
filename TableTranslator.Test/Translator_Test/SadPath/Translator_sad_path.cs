@@ -1,24 +1,24 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using TableTranslator.Exceptions;
+using TableTranslator.Test.TestModels;
+using TableTranslator.Test.TestModels.Profiles;
 
 namespace TableTranslator.Test.Translator_Test.SadPath
 {
     [TestFixture]
-    public class Translator_sad_path
+    public class Translator_sad_path : UnloadedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            Translator.RemoveAllProfiles();
-        }
-
         [Test]
         public void Calling_ApplyUpdates_before_Initialize_throws_TableTranslationException()
         {
-            if (!Translator.IsInitialized)
-            {
-                Assert.Throws<TableTranslatorException>(() => Translator.ApplyUpdates());
-            }
+            Assert.Throws<TableTranslatorException>(() => Translator.ApplyUpdates());
+        }
+
+        [Test]
+        public void Translate_to_DT_throws_TableTranslatorException_when_attempting_to_translate_before_initialization()
+        {
+            Assert.Throws<TableTranslatorException>(() => Translator.TranslateToDataTable<BasicProfile, TestPerson>(new List<TestPerson>(), "Bad Name"));
         }
     }
 }

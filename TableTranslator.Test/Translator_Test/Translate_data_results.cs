@@ -7,21 +7,14 @@ using TableTranslator.Test.TestModels;
 namespace TableTranslator.Test.Translator_Test
 {
     [TestFixture]
-    public class Translate_data_results
+    public class Translate_data_results : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
         [Test]
         public void Delegate_funtion_that_updates_member_ordered_after_member_configs_does_not_change_values()
         {
             var people = new List<TestPerson> {new TestPerson {PublicProperty = "Hello"}};
             Translator.AddProfile<StrangeDelegatesProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var table = Translator.TranslateToDataTable<StrangeDelegatesProfile, TestPerson>(people, "After");
             Assert.AreEqual("Hello", table.Rows[0][0]);
         }
@@ -31,7 +24,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             var people = new List<TestPerson> { new TestPerson { PublicProperty = "Hello" } };
             Translator.AddProfile<StrangeDelegatesProfile>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var table = Translator.TranslateToDataTable<StrangeDelegatesProfile, TestPerson>(people, "Before");
             Assert.AreEqual(StrangeDelegatesProfile.ValueUpdatedTo, table.Rows[0][1]);
         }

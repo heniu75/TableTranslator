@@ -9,28 +9,17 @@ using TableTranslator.Test.TestModels.Profiles;
 namespace TableTranslator.Test.Translator_Test
 {
     [TestFixture]
-    public class Get_translations
+    public class Get_translations : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
         [Test]
         public void Calling_initialize_more_than_once_does_not_duplicate_translations()
         {
             Translator.AddProfile<BasicProfile>();
             Translator.AddProfile<BasicProfile2>();
 
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var translationsCount1 = Translator.GetAllTranslations().Count();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var translationsCount2 = Translator.GetAllTranslations().Count();
 
             Assert.AreEqual(translationsCount1, translationsCount2);
@@ -50,7 +39,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.AddProfile<BasicProfile2>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var collections = Translator.GetAllTranslations();
             Assert.AreEqual(6, collections.Count());
         }
@@ -60,7 +49,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.AddProfile<BasicProfile2>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
             var collections = Translator.GetProfileTranslations<BasicProfile2>();
             Assert.AreEqual(2, collections.Count());
         }
@@ -70,7 +59,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.AddProfile<BasicProfile2>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
 
             var personTranslations = Translator.GetProfileTranslationsForType<BasicProfile, TestPerson>();
             var parentTranslations = Translator.GetProfileTranslationsForType<BasicProfile, TestParent>();
@@ -84,7 +73,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.AddProfile<BasicProfile2>();
-            Translator.Initialize();
+            Translator.ApplyUpdates();
 
             var translation = Translator.GetProfileTranslation<BasicProfile, TestPerson>("Translation2");
             Assert.AreEqual("Translation2", translation.TranslationSettings.TranslationName);

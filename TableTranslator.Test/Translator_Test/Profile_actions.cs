@@ -9,19 +9,8 @@ using TableTranslator.Test.TestModels.Profiles;
 namespace TableTranslator.Test.Translator_Test
 {
     [TestFixture]
-    public class Profile_actions
+    public class Profile_actions : InitializedTranslatorTestBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            if (!Translator.IsInitialized)
-            {
-                Translator.Initialize();
-            }
-            Translator.RemoveAllProfiles();
-            Translator.ApplyUpdates();
-        }
-
         [Test]
         public void Add_profile_with_generic()
         {
