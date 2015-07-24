@@ -5,6 +5,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using TableTranslator.Abstract;
+using TableTranslator.Helpers;
 using TableTranslator.Model;
 using TableTranslator.Model.ColumnConfigurations;
 using TableTranslator.Model.Settings;
@@ -27,13 +28,15 @@ namespace TableTranslator
             }
         }
 
-        public DataTable TranslateToDataTable<T>(InitializedTranslation translation, IEnumerable<T> data, bool isForDbParameter) where T : new()
+        public DataTable FillDataTable<T>(InitializedTranslation translation, IEnumerable<T> data, bool isForDbParameter) where T : new()
         {
             var dataTable = translation.Structure.Clone();
             if (data == null) return dataTable;
             
             foreach (var x in data)
             {
+                /* ReSharper disable once CompareNonConstrainedGenericWithNull
+                I have Jon Skeet's express permission to ignore this warning :) (http://stackoverflow.com/questions/5340817/what-should-i-do-about-possible-compare-of-value-type-with-null) */
                 if (x == null) continue;
 
                 var row = dataTable.NewRow();
@@ -43,7 +46,7 @@ namespace TableTranslator
                     row[BuildFullColumnName(colConfig.ColumnName, translation)] = 
                         !isForDbParameter 
                             ? tmp ?? colConfig.NullReplacement
-                            : tmp ?? colConfig.NullReplacement ?? DBNull.Value;
+                            : tmp ?? colConfig.NullReplacement ?? DBNull.Value; // we want to use DBNull is this destined for a DB
                 }
                 dataTable.Rows.Add(row);
             }
@@ -51,10 +54,10 @@ namespace TableTranslator
             return dataTable;
         }
 
-        public DbParameter TranslateToDbParameter<T>(InitializedTranslation translation, IEnumerable<T> data, DbParameterSettings dbParameterSettings)
+        public DbParameter BuildDbParameter<T>(InitializedTranslation translation, IEnumerable<T> data, DbParameterSettings dbParameterSettings)
              where T : new()
         {
-            var dataTable = TranslateToDataTable(translation, data, true);
+            var dataTable = FillDataTable(translation, data, true);
             dataTable.TableName = dbParameterSettings.DatabaseObjectName;
 
             switch (dbParameterSettings.DatabaseType)
@@ -75,15 +78,11 @@ namespace TableTranslator
 
         private static DataColumn BuildDataColumn(TranslationBase translation, ColumnConfigurationBase colConfig)
         {
-            // will get the "true" type for nullable types (e.g. int?, DateTime?, etc.), otherwise it will be null
-            var underlyingTypeOfNullableType = Nullable.GetUnderlyingType(colConfig.OutputType);
-
             return new DataColumn(
                 BuildFullColumnName(colConfig.ColumnName, translation),
-                underlyingTypeOfNullableType ?? colConfig.OutputType)
+                colConfig.OutputType.GetPureType()) // will get the "underlying" type for nullable valye types (e.g. int?) if needed
             {
-                // string can be null even though it doesn't implement Nullable<> and is a value type
-                AllowDBNull = underlyingTypeOfNullableType != null || !colConfig.OutputType.IsValueType || colConfig.OutputType == typeof(string)
+                AllowDBNull = colConfig.OutputType.IsNullAssignable()
             };
         }
 

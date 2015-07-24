@@ -13,7 +13,6 @@
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -67,7 +66,6 @@
     <Compile Include="Model\Settings\ColumnSettings.cs" />
     <Compile Include="Model\Settings\TranslationSettings.cs" />
     <Compile Include="Model\TranslationBase.cs" />
-    <Compile Include="Helpers\PredicateBuilder.cs" />
     <Compile Include="TranslationStore.cs" />
     <Compile Include="Model\ColumnConfigurations\DelegateColumnConfiguration.cs" />
     <Compile Include="Model\Settings\DelegateSettings.cs" />

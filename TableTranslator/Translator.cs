@@ -159,7 +159,7 @@ namespace TableTranslator
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
-            return _engine.TranslateToDataTable(_store.SingleInitializedTranslation<T, K>(), source);
+            return _engine.FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
         }
 
         public static DataTable TranslateToDataTable<T, K>(IEnumerable<K> source, string translationName)
@@ -167,7 +167,7 @@ namespace TableTranslator
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
-            return _engine.TranslateToDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
+            return _engine.FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
         }
 
         public static DbParameter TranslateToDbParameter<T, K>(IEnumerable<K> source, DbParameterSettings dbParameterSettings)
@@ -175,7 +175,7 @@ namespace TableTranslator
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
-            return _engine.TranslateToDbParameter(_store.SingleInitializedTranslation<T, K>(), source, dbParameterSettings);
+            return _engine.BuildDbParameter(_store.SingleInitializedTranslation<T, K>(), source, dbParameterSettings);
         }
 
         public static DbParameter TranslateToDbParameter<T, K>(IEnumerable<K> source, string translationName, DbParameterSettings dbParameterSettings)
@@ -183,7 +183,7 @@ namespace TableTranslator
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
-            return _engine.TranslateToDbParameter(_store.SingleInitializedTranslation<T, K>(translationName), source, dbParameterSettings);
+            return _engine.BuildDbParameter(_store.SingleInitializedTranslation<T, K>(translationName), source, dbParameterSettings);
         }
 
         #endregion

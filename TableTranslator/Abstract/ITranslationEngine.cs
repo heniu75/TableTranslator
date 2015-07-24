@@ -9,7 +9,7 @@ namespace TableTranslator.Abstract
     internal interface ITranslationEngine
     {
         void Initialize(IEnumerable<InitializedTranslation> translations);
-        DataTable TranslateToDataTable<T>(InitializedTranslation translation, IEnumerable<T> data, bool isForDbParameter = false) where T : new();
-        DbParameter TranslateToDbParameter<T>(InitializedTranslation translation, IEnumerable<T> data, DbParameterSettings dbParameterSettings) where T : new();
+        DataTable FillDataTable<T>(InitializedTranslation translation, IEnumerable<T> data, bool isForDbParameter = false) where T : new();
+        DbParameter BuildDbParameter<T>(InitializedTranslation translation, IEnumerable<T> data, DbParameterSettings dbParameterSettings) where T : new();
     }
 }

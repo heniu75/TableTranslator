@@ -48,14 +48,15 @@ namespace TableTranslator.Helpers
             return null;
         }
 
-        internal static Type GetTrueType(this Type type)
+        internal static Type GetPureType(this Type type)
         {
             return Nullable.GetUnderlyingType(type) ?? type;
         }
 
-        internal static bool IsNullableValueType(this Type type)
+        internal static bool IsNullAssignable(this Type type)
         {
-            return Nullable.GetUnderlyingType(type) != null;
+            // string can be null even though it doesn't implement Nullable<> and is a value type
+            return Nullable.GetUnderlyingType(type) != null || !type.IsValueType || type == typeof(string);
         }
 
         internal static IEnumerable<Type> GetTraversedGenericTypes(this Type type)
@@ -63,7 +64,7 @@ namespace TableTranslator.Helpers
             return type.GetGenericArguments().Traverse(x => x.GetGenericArguments());
         }
 
-        internal static IEnumerable<T> Traverse<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector)
+        private static IEnumerable<T> Traverse<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> childSelector)
         {
             var queue = new Queue<T>(items);
             while (queue.Any())

@@ -4,9 +4,9 @@ namespace TableTranslator.Model
 {
     internal class InitializedTranslationProfile
     {
-        internal string ColumnNamePrefix { get; set; }
-        internal string ColumnNameSuffix { get; set; }
-        internal string ProfileName { get; set; }
+        private string ColumnNamePrefix { get; set; }
+        private string ColumnNameSuffix { get; set; }
+        private string ProfileName { get; set; }
 
         public InitializedTranslationProfile(ICloneable<TranslationProfile> profile)
         {
