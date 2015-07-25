@@ -1,3 +1,5 @@
+using System;
+
 namespace TableTranslator.Model.Settings
 {
     public class DbParameterSettings
@@ -6,10 +8,13 @@ namespace TableTranslator.Model.Settings
         private readonly string _databaseObjectName;
         private readonly DatabaseType _databaseType;
 
-        public DbParameterSettings(string parameterName, string databaseObjectName, DatabaseType databaseType)
+        public DbParameterSettings(string parameterName, string databaseObjectName)
         {
+            if (string.IsNullOrWhiteSpace(parameterName)) throw new ArgumentNullException("parameterName");
+            if (string.IsNullOrWhiteSpace(databaseObjectName)) throw new ArgumentNullException("databaseObjectName");
+
             this._databaseObjectName = databaseObjectName;
-            this._databaseType = databaseType;
+            this._databaseType = DatabaseType.Sql;
             this._parameterName = parameterName;
         }
 
@@ -23,7 +28,7 @@ namespace TableTranslator.Model.Settings
             get { return this._databaseObjectName; }
         }
 
-        public DatabaseType DatabaseType
+        internal DatabaseType DatabaseType
         {
             get { return this._databaseType; }
         }

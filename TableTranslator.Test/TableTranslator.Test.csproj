@@ -80,8 +80,10 @@
     <Compile Include="Translator_Test\Get_translations.cs" />
     <Compile Include="Translator_Test\Profile_actions.cs" />
     <Compile Include="Translator_Test\SadPath\Profile_sad_path.cs" />
+    <Compile Include="Translator_Test\SadPath\Translate_to_DbParameter_sad_path.cs" />
     <Compile Include="Translator_Test\SadPath\Translate_to_DT_sad_path.cs" />
     <Compile Include="Translator_Test\SadPath\Translation_sad_path.cs" />
+    <Compile Include="Translator_Test\Translate_to_DbParameter.cs" />
     <Compile Include="Translator_Test\Translator_initialize_and_unload.cs" />
     <Compile Include="Translator_Test\SadPath\Translator_sad_path.cs" />
     <Compile Include="InitializedTranslatorTestBase.cs" />

@@ -15,7 +15,7 @@ namespace TableTranslator.Test.Translator_Test
             var people = new List<TestPerson> {new TestPerson {PublicProperty = "Hello"}};
             Translator.AddProfile<StrangeDelegatesProfile>();
             Translator.ApplyUpdates();
-            var table = Translator.TranslateToDataTable<StrangeDelegatesProfile, TestPerson>(people, "After");
+            var table = Translator.Translate<StrangeDelegatesProfile, TestPerson>(people, "After");
             Assert.AreEqual("Hello", table.Rows[0][0]);
         }
 
@@ -25,7 +25,7 @@ namespace TableTranslator.Test.Translator_Test
             var people = new List<TestPerson> { new TestPerson { PublicProperty = "Hello" } };
             Translator.AddProfile<StrangeDelegatesProfile>();
             Translator.ApplyUpdates();
-            var table = Translator.TranslateToDataTable<StrangeDelegatesProfile, TestPerson>(people, "Before");
+            var table = Translator.Translate<StrangeDelegatesProfile, TestPerson>(people, "Before");
             Assert.AreEqual(StrangeDelegatesProfile.ValueUpdatedTo, table.Rows[0][1]);
         }
 

@@ -16,7 +16,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         {
             Translator.AddProfile<AllMembersProfile>();
             Translator.ApplyUpdates();
-            var colName = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "All").GetColumnNames();
+            var colName = Translator.Translate<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "All").GetColumnNames();
             CollectionAssert.Contains(colName, "Age");
             CollectionAssert.Contains(colName, "Name");
             CollectionAssert.Contains(colName, "IsMale");
@@ -28,7 +28,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         {
             Translator.AddProfile<AllMembersProfile>();
             Translator.ApplyUpdates();
-            var colName = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllWithMPredicate").GetColumnNames();
+            var colName = Translator.Translate<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllWithMPredicate").GetColumnNames();
             CollectionAssert.Contains(colName, "Name");
             CollectionAssert.Contains(colName, "IsMale");
             CollectionAssert.DoesNotContain(colName, "Age");
@@ -39,7 +39,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         {
             Translator.AddProfile<AllMembersProfile>();
             Translator.ApplyUpdates();
-            var colNames = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllByNameDesc").GetColumnNames();
+            var colNames = Translator.Translate<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllByNameDesc").GetColumnNames();
             Assert.AreEqual("Name", colNames[0]);
             Assert.AreEqual("IsMale", colNames[1]);
             Assert.AreEqual("Age", colNames[2]);
@@ -50,7 +50,7 @@ namespace TableTranslator.Test.TranslationExpression_Test
         {
             Translator.AddProfile<AllMembersProfile>();
             Translator.ApplyUpdates();
-            var colNames = Translator.TranslateToDataTable<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllNoStaticBindingFlags").GetColumnNames();
+            var colNames = Translator.Translate<AllMembersProfile, AllMembersModel>(new List<AllMembersModel>(), "AllNoStaticBindingFlags").GetColumnNames();
             CollectionAssert.Contains(colNames, "Name");
             CollectionAssert.Contains(colNames, "Age");
             CollectionAssert.DoesNotContain(colNames, "IsMale");

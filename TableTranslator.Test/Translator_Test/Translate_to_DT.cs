@@ -23,7 +23,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dt = Translator.TranslateToDataTable<BasicProfile, TestPerson>(people, "Translation1");
+            var dt = Translator.Translate<BasicProfile, TestPerson>(people, "Translation1");
             Assert.AreEqual(3, dt.Rows.Count);
         }
 
@@ -32,7 +32,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var rows = Translator.TranslateToDataTable<BasicProfile, TestPerson>(people, "Translation1").Rows;
+            var rows = Translator.Translate<BasicProfile, TestPerson>(people, "Translation1").Rows;
 
             Assert.AreEqual("Chris", rows[0][0]);
             Assert.AreEqual(27, (int)rows[0][1]);
@@ -52,7 +52,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var cols = Translator.TranslateToDataTable<BasicProfile, TestPerson>(people, "Translation1").Columns;
+            var cols = Translator.Translate<BasicProfile, TestPerson>(people, "Translation1").Columns;
             Assert.AreEqual(typeof(string), cols[0].DataType);
             Assert.AreEqual(typeof(int), cols[1].DataType);
             Assert.AreEqual(typeof(int), cols[2].DataType);
@@ -63,7 +63,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var columnNames = Translator.TranslateToDataTable<BasicProfile, TestPerson>(people, "Translation1").GetColumnNames();
+            var columnNames = Translator.Translate<BasicProfile, TestPerson>(people, "Translation1").GetColumnNames();
             Assert.AreEqual("ColOne", columnNames.First());
             Assert.AreEqual("ColTwo", columnNames.Skip(1).First());
             Assert.AreEqual("ColThree", columnNames.Skip(2).First());
@@ -74,7 +74,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dt = Translator.TranslateToDataTable<BasicProfile, TestPerson>(people, "Translation1");
+            var dt = Translator.Translate<BasicProfile, TestPerson>(people, "Translation1");
             Assert.AreEqual("Translation1", dt.TableName);
         }
 
@@ -83,7 +83,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dt = Translator.TranslateToDataTable<BasicProfile, bool>(new List<bool> {true, false, true, false});
+            var dt = Translator.Translate<BasicProfile, bool>(new List<bool> {true, false, true, false});
             Assert.AreEqual("Boolean", dt.TableName);
         }
 
@@ -92,7 +92,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<GenericsProfile>();
             Translator.ApplyUpdates();
-            var dt = Translator.TranslateToDataTable<GenericsProfile, List<bool>>(new List<List<bool>>());
+            var dt = Translator.Translate<GenericsProfile, List<bool>>(new List<List<bool>>());
             Assert.AreEqual("List<Boolean>", dt.TableName);
         }
 
@@ -101,7 +101,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dt = Translator.TranslateToDataTable<BasicProfile, TestPerson>(new List<TestPerson>(people) { null }, "Translation1");
+            var dt = Translator.Translate<BasicProfile, TestPerson>(new List<TestPerson>(people) { null }, "Translation1");
             Assert.AreEqual(3, dt.Rows.Count);
         }
 
@@ -110,7 +110,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var cols = Translator.TranslateToDataTable<BasicProfile, TestPerson>(people, "Translation1").Columns;
+            var cols = Translator.Translate<BasicProfile, TestPerson>(people, "Translation1").Columns;
             Assert.AreEqual(true, cols[0].AllowDBNull);
             Assert.AreEqual(false, cols[1].AllowDBNull);
         }
@@ -120,7 +120,7 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dt = Translator.TranslateToDataTable<BasicProfile, TestPerson>(null, "Translation1");
+            var dt = Translator.Translate<BasicProfile, TestPerson>(null, "Translation1");
             Assert.AreEqual(0, dt.Rows.Count);
             Assert.AreEqual(3, dt.Columns.Count);
         }
@@ -131,9 +131,9 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<PrefixSuffixProfile>();
             Translator.ApplyUpdates();
 
-            var table = Translator.TranslateToDataTable<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "ProfileInherited1").GetColumnNames();
-            var table2 = Translator.TranslateToDataTable<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "ProfileInherited2").GetColumnNames();
-            var table3 = Translator.TranslateToDataTable<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "TranslationSpecific").GetColumnNames();
+            var table = Translator.Translate<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "ProfileInherited1").GetColumnNames();
+            var table2 = Translator.Translate<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "ProfileInherited2").GetColumnNames();
+            var table3 = Translator.Translate<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "TranslationSpecific").GetColumnNames();
 
             Assert.IsTrue(table.All(x => x.StartsWith("PROFPRE_") && x.EndsWith("_PROFSUF")));
             Assert.IsTrue(table2.All(x => x.StartsWith("PROFPRE_") && x.EndsWith("_PROFSUF")));
@@ -146,7 +146,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<PrefixSuffixProfile>();
             Translator.ApplyUpdates();
 
-            var table3 = Translator.TranslateToDataTable<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "TranslationSpecific").GetColumnNames();
+            var table3 = Translator.Translate<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "TranslationSpecific").GetColumnNames();
 
             Assert.IsTrue(table3.All(x => x.StartsWith("TRANPRE_") && x.EndsWith("_TRANSUF")));
         }
@@ -157,7 +157,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<PrefixSuffixProfile>();
             Translator.ApplyUpdates();
 
-            var columnNames = Translator.TranslateToDataTable<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "NullTranslationSpecific").GetColumnNames();
+            var columnNames = Translator.Translate<PrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "NullTranslationSpecific").GetColumnNames();
             Assert.IsTrue(columnNames.All(x => x.StartsWith("PROFPRE_") && x.EndsWith("_PROFSUF")));
         }
 
@@ -167,7 +167,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<NullPrefixSuffixProfile>();
             Translator.ApplyUpdates();
 
-            var table = Translator.TranslateToDataTable<NullPrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "NullPrefixSuffix").GetColumnNames();
+            var table = Translator.Translate<NullPrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "NullPrefixSuffix").GetColumnNames();
             Assert.IsTrue(!table.Any(x => x.StartsWith("PROFPRE_") && x.EndsWith("_PROFSUF")));
         }
 
@@ -177,7 +177,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<NullPrefixSuffixProfile>();
             Translator.ApplyUpdates();
 
-            var table = Translator.TranslateToDataTable<NullPrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "TranslationLevelNullPrefixSuffix").GetColumnNames();
+            var table = Translator.Translate<NullPrefixSuffixProfile, TestPerson>(new List<TestPerson>(), "TranslationLevelNullPrefixSuffix").GetColumnNames();
             Assert.IsTrue(!table.Any(x => x.StartsWith("TRANPRE_") && x.EndsWith("_TRANSUF")));
         }
 
@@ -194,7 +194,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<GenericsProfile>();
             Translator.ApplyUpdates();
             var dt = new DataTable();
-            Assert.DoesNotThrow(() => dt = Translator.TranslateToDataTable<GenericsProfile, Generics.OneGeneric<int>>(oneGenerics, "IntGeneric"));
+            Assert.DoesNotThrow(() => dt = Translator.Translate<GenericsProfile, Generics.OneGeneric<int>>(oneGenerics, "IntGeneric"));
             Assert.AreEqual(3, dt.Rows.Count);
         }
 
@@ -211,7 +211,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<GenericsProfile>();
             Translator.ApplyUpdates();
             var dt = new DataTable();
-            Assert.DoesNotThrow(() => dt = Translator.TranslateToDataTable<GenericsProfile, Generics.ThreeGenerics<int, DateTime, string>>(threeGenerics));
+            Assert.DoesNotThrow(() => dt = Translator.Translate<GenericsProfile, Generics.ThreeGenerics<int, DateTime, string>>(threeGenerics));
             Assert.AreEqual(3, dt.Rows.Count);
         }
 
@@ -228,7 +228,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.AddProfile<GenericsProfile>();
             Translator.ApplyUpdates();
             var dt = new DataTable();
-            Assert.DoesNotThrow(() => dt = Translator.TranslateToDataTable<GenericsProfile, Generics.OneGeneric<Generics.OneGeneric<bool>>>(nestedGenerics, "NestedGeneric"));
+            Assert.DoesNotThrow(() => dt = Translator.Translate<GenericsProfile, Generics.OneGeneric<Generics.OneGeneric<bool>>>(nestedGenerics, "NestedGeneric"));
             Assert.AreEqual(3, dt.Rows.Count);
         }
     }

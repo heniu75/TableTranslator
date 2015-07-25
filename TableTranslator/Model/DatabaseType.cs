@@ -1,6 +1,6 @@
 namespace TableTranslator.Model
 {
-    public enum DatabaseType
+    internal enum DatabaseType
     {
         Sql = 0,
         Oracle,

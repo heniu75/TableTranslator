@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\ICloneable.cs" />
+    <Compile Include="Engines\DbParameterTranslationEngine.cs" />
     <Compile Include="Model\InitializedTranslation.cs" />
     <Compile Include="Model\InitializedTranslationProfile.cs" />
     <Compile Include="Model\TranslationProfileState.cs" />
@@ -71,12 +72,12 @@
     <Compile Include="Model\Settings\DelegateSettings.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Abstract\ITranslationStore.cs" />
-    <Compile Include="Abstract\ITranslationEngine.cs" />
+    <Compile Include="Abstract\TranslationEngine.cs" />
     <Compile Include="Model\ColumnConfigurations\MemberColumnConfiguration.cs" />
     <Compile Include="Model\DatabaseType.cs" />
     <Compile Include="Model\ColumnConfigurations\SimpleValueColumnConfiguration.cs" />
     <Compile Include="ObservableDictionary.cs" />
-    <Compile Include="TranslationEngine.cs" />
+    <Compile Include="Engines\SimpleTranslationEngine.cs" />
     <Compile Include="Model\TranslationExpression.cs" />
     <Compile Include="Model\TranslationUniqueIdentifier.cs" />
     <Compile Include="Translator.cs" />

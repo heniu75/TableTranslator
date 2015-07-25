@@ -18,7 +18,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         [Test]
         public void Translate_to_DT_throws_TableTranslatorException_when_attempting_to_translate_before_initialization()
         {
-            Assert.Throws<TableTranslatorException>(() => Translator.TranslateToDataTable<BasicProfile, TestPerson>(new List<TestPerson>(), "Bad Name"));
+            Assert.Throws<TableTranslatorException>(() => Translator.Translate<BasicProfile, TestPerson>(new List<TestPerson>(), "Bad Name"));
         }
     }
 }

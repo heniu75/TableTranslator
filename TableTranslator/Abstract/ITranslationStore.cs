@@ -7,7 +7,7 @@ namespace TableTranslator.Abstract
 {
     internal interface ITranslationStore
     {
-        IEnumerable<InitializedTranslation> Initialize(bool fullReset);
+        void Initialize(bool fullReset, IEnumerable<TranslationEngine> engines);
         void UnloadAll();
 
         void AddProfile(TranslationProfile translationProfile);

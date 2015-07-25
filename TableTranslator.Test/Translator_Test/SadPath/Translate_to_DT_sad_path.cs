@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using TableTranslator.Exceptions;
-using TableTranslator.Model;
-using TableTranslator.Model.Settings;
 using TableTranslator.Test.TestModels;
 using TableTranslator.Test.TestModels.Profiles;
 
@@ -21,7 +19,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         [Test]
         public void Translate_to_DT_throws_TableTranslatorException_when_no_matching_translation_is_found()
         {
-            Assert.Throws<TableTranslatorException>(() => Translator.TranslateToDataTable<BasicProfile, TestPerson>(this.people, "Bad Name"));
+            Assert.Throws<TableTranslatorException>(() => Translator.Translate<BasicProfile, TestPerson>(this.people, "Bad Name"));
         }
 
         [Test]
@@ -29,7 +27,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            Assert.Throws<TableTranslatorException>(() => Translator.TranslateToDataTable<BasicProfile, TestPerson>(this.people));
+            Assert.Throws<TableTranslatorException>(() => Translator.Translate<BasicProfile, TestPerson>(this.people));
         }
 
         [Test]
@@ -38,7 +36,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
             Translator.AddProfile<GenericsProfile>();
             Translator.ApplyUpdates();
             Assert.Throws<TableTranslatorException>(() => 
-                Translator.TranslateToDataTable<GenericsProfile, Generics.OneGeneric<bool>>(new List<Generics.OneGeneric<bool>>(), "IntGeneric"));
+                Translator.Translate<GenericsProfile, Generics.OneGeneric<bool>>(new List<Generics.OneGeneric<bool>>(), "IntGeneric"));
         }
 
         [Test]
@@ -47,7 +45,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
             Translator.AddProfile<GenericsProfile>();
             Translator.ApplyUpdates();
             Assert.Throws<TableTranslatorException>(() =>
-                Translator.TranslateToDataTable<GenericsProfile, Generics.OneGeneric<Generics.OneGeneric<DateTime>>>(new List<Generics.OneGeneric<Generics.OneGeneric<DateTime>>>(), "NestedGeneric"));
+                Translator.Translate<GenericsProfile, Generics.OneGeneric<Generics.OneGeneric<DateTime>>>(new List<Generics.OneGeneric<Generics.OneGeneric<DateTime>>>(), "NestedGeneric"));
         }
     }
 }

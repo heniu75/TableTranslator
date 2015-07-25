@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using TableTranslator.Abstract;
+using TableTranslator.Engines;
 using TableTranslator.Exceptions;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
@@ -13,24 +15,18 @@ namespace TableTranslator
     public static class Translator
     {
         public static bool IsInitialized { get; private set; }
-        private static ITranslationStore _store = new TranslationStore();
-        private static ITranslationEngine _engine= new TranslationEngine();
+        private static readonly ITranslationStore _store = new TranslationStore();
 
-        internal static void ChangeConfigurationStore(ITranslationStore configStore)
+        private static readonly List<TranslationEngine> _engines = new List<TranslationEngine>
         {
-            _store = configStore;
-        }
-
-        internal static void ChangeTranslationEngine(ITranslationEngine engine)
-        {
-            _engine = engine;
-        }
+            new SimpleTranslationEngine(),
+            new DbParameterTranslationEngine()
+        };
 
         public static void Initialize()
         {
             if (IsInitialized) throw new TableTranslatorException("Table translator has already been initialized");
-            var initializedTranlations = _store.Initialize(true);
-            _engine.Initialize(initializedTranlations);
+             _store.Initialize(true, _engines);
             IsInitialized = true;
         }
 
@@ -38,8 +34,7 @@ namespace TableTranslator
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling ApplyUpdates().");
             // currently just calls Initialize(), but separating it here for future enhancements (e.g. translation updates, column config updates, etc.)
-            var initializedTranlations = _store.Initialize(false);
-            _engine.Initialize(initializedTranlations);
+            _store.Initialize(false, _engines);
         }
 
         public static void UnloadAll()
@@ -154,20 +149,20 @@ namespace TableTranslator
 
         #region translators
 
-        public static DataTable TranslateToDataTable<T, K>(IEnumerable<K> source) 
+        public static DataTable Translate<T, K>(IEnumerable<K> source) 
             where T : TranslationProfile, new()
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
-            return _engine.FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
+            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
         }
 
-        public static DataTable TranslateToDataTable<T, K>(IEnumerable<K> source, string translationName)
+        public static DataTable Translate<T, K>(IEnumerable<K> source, string translationName)
             where T : TranslationProfile, new()
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
-            return _engine.FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
+            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
         }
 
         public static DbParameter TranslateToDbParameter<T, K>(IEnumerable<K> source, DbParameterSettings dbParameterSettings)
@@ -175,7 +170,8 @@ namespace TableTranslator
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
-            return _engine.BuildDbParameter(_store.SingleInitializedTranslation<T, K>(), source, dbParameterSettings);
+            var table = _engines.Single(x => x.GetType() == typeof(DbParameterTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
+            return WrapinDbParameter(table, dbParameterSettings);
         }
 
         public static DbParameter TranslateToDbParameter<T, K>(IEnumerable<K> source, string translationName, DbParameterSettings dbParameterSettings)
@@ -183,7 +179,33 @@ namespace TableTranslator
             where K : new()
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
-            return _engine.BuildDbParameter(_store.SingleInitializedTranslation<T, K>(translationName), source, dbParameterSettings);
+            var table = _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
+            return WrapinDbParameter(table, dbParameterSettings);
+        }
+
+        private static DbParameter WrapinDbParameter(DataTable dataTable, DbParameterSettings dbParameterSettings)
+        {
+            if (dbParameterSettings == null)
+            {
+                throw new ArgumentNullException("dbParameterSettings");
+            }
+
+            dataTable.TableName = dbParameterSettings.DatabaseObjectName;
+
+            switch (dbParameterSettings.DatabaseType)
+            {
+                case DatabaseType.Sql:
+                    return new SqlParameter(dbParameterSettings.ParameterName, SqlDbType.Structured)
+                    {
+                        Value = dataTable,
+                        TypeName = dbParameterSettings.DatabaseObjectName
+                    };
+                case DatabaseType.Oracle:
+                case DatabaseType.MySql:
+                    throw new NotImplementedException(string.Format("Database type {0} has not been implemented yet.", dbParameterSettings.DatabaseType));
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion
