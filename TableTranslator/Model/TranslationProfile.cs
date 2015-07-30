@@ -13,12 +13,9 @@ namespace TableTranslator.Model
         private ITranslationStore _translationStore;
         protected internal abstract void Configure();
 
-        public virtual string ProfileName
-        {
-            get { return this.GetType().GetFormattedName(); }
-        }
-        protected internal virtual string ColumnNamePrefix { get { return string.Empty; } }
-        protected internal virtual string ColumnNameSuffix { get { return string.Empty; } }
+        public virtual string ProfileName => this.GetType().GetFormattedName();
+        protected internal virtual string ColumnNamePrefix => string.Empty;
+        protected internal virtual string ColumnNameSuffix => string.Empty;
 
         internal void Initialize(ITranslationStore translationStore)
         {

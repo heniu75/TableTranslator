@@ -55,6 +55,9 @@
     <Compile Include="Engines\DbParameterTranslationEngine.cs" />
     <Compile Include="Model\InitializedTranslation.cs" />
     <Compile Include="Model\InitializedTranslationProfile.cs" />
+    <Compile Include="Model\Settings\GuidIdentitySettings.cs" />
+    <Compile Include="Model\Settings\IdentitySettings.cs" />
+    <Compile Include="Model\Settings\IntIdentitySettings.cs" />
     <Compile Include="Model\TranslationProfileState.cs" />
     <Compile Include="Model\Settings\DbParameterSettings.cs" />
     <Compile Include="Exceptions\TableTranslatorConfigurationException.cs" />
@@ -72,7 +75,7 @@
     <Compile Include="Model\Settings\DelegateSettings.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Abstract\ITranslationStore.cs" />
-    <Compile Include="Abstract\TranslationEngine.cs" />
+    <Compile Include="Engines\TranslationEngine.cs" />
     <Compile Include="Model\ColumnConfigurations\MemberColumnConfiguration.cs" />
     <Compile Include="Model\DatabaseType.cs" />
     <Compile Include="Model\ColumnConfigurations\SimpleValueColumnConfiguration.cs" />

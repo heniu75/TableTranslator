@@ -4,6 +4,7 @@ namespace TableTranslator.Model.Settings
 {
     public sealed class TranslationSettings : ICloneable<TranslationSettings>
     {
+        public IdentitySettings IdentitySettings { get; private set; }
         public string TranslationName { get; internal set; }
         public string ColumnNamePrefix { get; private set; }
         public string ColumnNameSuffix { get; private set; }
@@ -15,14 +16,15 @@ namespace TableTranslator.Model.Settings
             this.ColumnNameSuffix = columnNameSuffix;
         }
 
-        public TranslationSettings ShallowClone()
+        public TranslationSettings(IdentitySettings identitySettings, string translationName = "", string columnNamePrefix = "", string columnNameSuffix = "")
         {
-            return this.MemberwiseClone() as TranslationSettings;
+            this.IdentitySettings = identitySettings;
+            this.TranslationName = translationName;
+            this.ColumnNamePrefix = columnNamePrefix;
+            this.ColumnNameSuffix = columnNameSuffix;
         }
 
-        public TranslationSettings DeepClone()
-        {
-            return ShallowClone();
-        }
+        public TranslationSettings ShallowClone() => this.MemberwiseClone() as TranslationSettings;
+        public TranslationSettings DeepClone() => ShallowClone();
     }
 }

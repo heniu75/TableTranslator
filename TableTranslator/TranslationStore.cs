@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using TableTranslator.Abstract;
+using TableTranslator.Engines;
 using TableTranslator.Exceptions;
 using TableTranslator.Helpers;
 using TableTranslator.Model;
@@ -27,7 +28,7 @@ namespace TableTranslator
             this._initializedProfiles.CollectionChanged += CascadeInitializedProfileChanges;
         }
 
-        public void Initialize(bool fullReset, IEnumerable<TranslationEngine> engines)
+        public void Initialize(IEnumerable<TranslationEngine> engines)
         {
             ClearProfilesAndTranslations(false);
 

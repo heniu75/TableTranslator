@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using TableTranslator.Model;
+using TableTranslator.Model.Settings;
 using TableTranslator.Test.TestModels;
 using TableTranslator.Test.TestModels.Profiles;
 
@@ -12,7 +13,7 @@ namespace TableTranslator.Test.Translator_Test
     public class Get_translations : InitializedTranslatorTestBase
     {
         [Test]
-        public void Calling_initialize_more_than_once_does_not_duplicate_translations()
+        public void Calling_apply_updates_more_than_once_does_not_duplicate_translations()
         {
             Translator.AddProfile<BasicProfile>();
             Translator.AddProfile<BasicProfile2>();

@@ -13,13 +13,15 @@ namespace TableTranslator.Model
         private readonly IColumnConfigurationBuilder _colConfigBuilder = new ColumnConfigurationBuilder();
 
         private int _ordinal;
-        private int Ordinal
-        {
-            get { return this._ordinal++; }
-        }
+        private int Ordinal => this._ordinal++;
 
         internal TranslationExpression(Translation translation)
         {
+            if (translation.TranslationSettings.IdentitySettings != null)
+            {
+                // if there is an identity setting defined, increment the ordinal so column configs will get increased as well
+                this._ordinal++;
+            }
             this.Translation = translation;
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TableTranslator.Engines;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
 
@@ -7,7 +8,7 @@ namespace TableTranslator.Abstract
 {
     internal interface ITranslationStore
     {
-        void Initialize(bool fullReset, IEnumerable<TranslationEngine> engines);
+        void Initialize(IEnumerable<TranslationEngine> engines);
         void UnloadAll();
 
         void AddProfile(TranslationProfile translationProfile);

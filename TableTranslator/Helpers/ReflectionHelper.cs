@@ -42,10 +42,7 @@ namespace TableTranslator.Helpers
                 return propertyInfo.PropertyType;
 
             var fieldInfo = memberInfo as FieldInfo;
-            if (fieldInfo != null)
-                return fieldInfo.FieldType;
-
-            return null;
+            return fieldInfo?.FieldType;
         }
 
         internal static Type GetPureType(this Type type)
