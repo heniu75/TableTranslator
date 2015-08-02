@@ -1,10 +1,11 @@
 ﻿using TableTranslator.Abstract;
+using TableTranslator.Model.ColumnConfigurations;
 
 namespace TableTranslator.Model.Settings
 {
     public sealed class TranslationSettings : ICloneable<TranslationSettings>
     {
-        public IdentitySettings IdentitySettings { get; private set; }
+        public IdentityColumnConfiguration IdentityColumnConfiguration { get; private set; }
         public string TranslationName { get; internal set; }
         public string ColumnNamePrefix { get; private set; }
         public string ColumnNameSuffix { get; private set; }
@@ -16,9 +17,9 @@ namespace TableTranslator.Model.Settings
             this.ColumnNameSuffix = columnNameSuffix;
         }
 
-        public TranslationSettings(IdentitySettings identitySettings, string translationName = "", string columnNamePrefix = "", string columnNameSuffix = "")
+        public TranslationSettings(IdentityColumnConfiguration identityColumnConfiguration, string translationName = "", string columnNamePrefix = "", string columnNameSuffix = "")
         {
-            this.IdentitySettings = identitySettings;
+            this.IdentityColumnConfiguration = identityColumnConfiguration;
             this.TranslationName = translationName;
             this.ColumnNamePrefix = columnNamePrefix;
             this.ColumnNameSuffix = columnNameSuffix;

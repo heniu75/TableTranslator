@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using TableTranslator.Exceptions;
 using TableTranslator.Model;
-using TableTranslator.Test.TestModels.Profiles;
+using TableTranslator.Test.Model.Profiles;
 
 namespace TableTranslator.Test.Translator_Test.SadPath
 {

@@ -17,7 +17,7 @@ namespace TableTranslator.Model
         {
         }
 
-        internal void AddColumnConfiguration(ColumnConfigurationBase config)
+        internal void AddColumnConfiguration(NonIdentityColumnConfiguration config)
         {
             if (this.ColumnConfigurations.Any(cc => cc.Ordinal == config.Ordinal))
             {
@@ -34,7 +34,7 @@ namespace TableTranslator.Model
             this.ColumnConfigurations.Add(config);
         }
 
-        public ReadOnlyCollection<ColumnConfigurationBase> GetColumnConfigurations()
+        public ReadOnlyCollection<NonIdentityColumnConfiguration> GetColumnConfigurations()
         {
             return this.ColumnConfigurations.AsReadOnly();
         }

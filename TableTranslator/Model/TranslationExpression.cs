@@ -17,7 +17,7 @@ namespace TableTranslator.Model
 
         internal TranslationExpression(Translation translation)
         {
-            if (translation.TranslationSettings.IdentitySettings != null)
+            if (translation.TranslationSettings.IdentityColumnConfiguration != null)
             {
                 // if there is an identity setting defined, increment the ordinal so column configs will get increased as well
                 this._ordinal++;
@@ -79,7 +79,7 @@ namespace TableTranslator.Model
             return this;
         }
 
-        public TranslationExpression<T> AddColumnConfiguration(ColumnConfigurationBase config)
+        public TranslationExpression<T> AddColumnConfiguration(NonIdentityColumnConfiguration config)
         {
             if (config == null)
             {

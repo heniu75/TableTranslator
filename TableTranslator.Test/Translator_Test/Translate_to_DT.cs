@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
-using TableTranslator.Test.TestModels;
-using TableTranslator.Test.TestModels.Profiles;
+using TableTranslator.Test.Model;
+using TableTranslator.Test.Model.Profiles;
 
 namespace TableTranslator.Test.Translator_Test
 {
