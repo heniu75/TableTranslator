@@ -38,7 +38,11 @@ namespace TableTranslator
                 this._initializedProfiles.Add(x.Key, new InitializedTranslationProfile(x.Value));
             });
 
-            this._translations.ToList().ForEach(x => this._initializedTranslations.Add(x.Key.ShallowClone(), InitializedTranslation.CreateInstance(x.Value, engines)));
+            this._translations.ToList().ForEach(
+                x =>
+                    this._initializedTranslations.Add(x.Key.ShallowClone(),
+                        InitializedTranslation.CreateInstance(x.Value, engines))
+                );
         }
 
         public void UnloadAll()

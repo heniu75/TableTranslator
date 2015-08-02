@@ -3,7 +3,7 @@ using TableTranslator.Exceptions;
 
 namespace TableTranslator.Model.ColumnConfigurations
 {
-    public sealed class SimpleValueColumnConfiguration : ColumnConfigurationBase
+    public sealed class SimpleValueColumnConfiguration : NonIdentityColumnConfiguration
     {
         private readonly string _columnName;
         private readonly object _value;
@@ -19,15 +19,8 @@ namespace TableTranslator.Model.ColumnConfigurations
             ValidateInput();
         }
 
-        public override string ColumnName
-        {
-            get { return !string.IsNullOrEmpty(this._columnName) ? this._columnName : base.DefaultColumnName; }
-        }
-
-        public override Type OutputType
-        {
-            get { return this._outputType; }
-        }
+        public override string ColumnName => !string.IsNullOrEmpty(this._columnName) ? this._columnName : base.OrdinalColumnName;
+        public override Type OutputType => this._outputType;
 
         public override object GetValueFromObject(object obj)
         {

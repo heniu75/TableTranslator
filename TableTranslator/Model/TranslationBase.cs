@@ -14,7 +14,7 @@ namespace TableTranslator.Model
         internal TranslationUniqueIdentifier TranslationUniqueIdentifier { get; set; }
         public TranslationProfile TranslationProfile { get; internal set; }
         public TranslationSettings TranslationSettings { get; internal set; }
-        internal List<ColumnConfigurationBase> ColumnConfigurations { get; set; }
+        internal List<NonIdentityColumnConfiguration> ColumnConfigurations { get; set; }
         internal List<Type> TraversedGenericArguments { get; set; }
 
         protected TranslationBase(Type type, TranslationProfile translationProfile, TranslationSettings translationSettings)
@@ -27,7 +27,7 @@ namespace TableTranslator.Model
             this.TranslationProfile = translationProfile;
             this.TranslationSettings = translationSettings;
             this.TraversedGenericArguments = type.GetTraversedGenericTypes().ToList();
-            this.ColumnConfigurations = new List<ColumnConfigurationBase>();
+            this.ColumnConfigurations = new List<NonIdentityColumnConfiguration>();
             this.TypeInfo = type.GetTypeInfo();
             this.TranslationUniqueIdentifier = TranslationUniqueIdentifier.GetInstance(this);
         }
