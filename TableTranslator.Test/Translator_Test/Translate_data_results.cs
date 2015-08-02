@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
-using TableTranslator.Test.Model;
+using TableTranslator.Test.TestModels;
 
 namespace TableTranslator.Test.Translator_Test
 {

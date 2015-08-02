@@ -21,7 +21,7 @@ namespace TableTranslator
             return new DelegateColumnConfiguration(delegateSettings, columnSettings.Ordinal, columnSettings.ColumnName, columnSettings.NullReplacement);
         }
 
-        public NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings) where T : new()
+        public ColumnConfigurationBase BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings) where T : new()
         {
             // convert const members to become a simple configuration
             if (func.Body.NodeType == ExpressionType.Constant)
@@ -34,12 +34,12 @@ namespace TableTranslator
             return new MemberColumnConfiguration(memberInfo, columnSettings.Ordinal, columnSettings.ColumnName, columnSettings.NullReplacement, fullPropertyPath);
         }
 
-        public NonIdentityColumnConfiguration BuildMemberColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new()
+        public ColumnConfigurationBase BuildMemberColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new()
         {
             return new MemberColumnConfiguration(memberInfo, ordinal, memberInfo.GetMemberType().GetDefaultValue());
         }
 
-        private NonIdentityColumnConfiguration CreateColumnConfigurationFromConstant<T, K>(ConstantExpression constExpression, ColumnSettings<K> columnSettings) where T : new()
+        private ColumnConfigurationBase CreateColumnConfigurationFromConstant<T, K>(ConstantExpression constExpression, ColumnSettings<K> columnSettings) where T : new()
         {
             if (constExpression == null) throw new ArgumentNullException("constExpression");
 

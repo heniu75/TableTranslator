@@ -4,7 +4,7 @@ using TableTranslator.Model.Settings;
 
 namespace TableTranslator.Model.ColumnConfigurations
 {
-    public sealed class DelegateColumnConfiguration : NonIdentityColumnConfiguration
+    public sealed class DelegateColumnConfiguration : ColumnConfigurationBase
     {
         private readonly string _columnName;
         public DelegateSettings DelegateSettings { get; private set; }
@@ -25,8 +25,15 @@ namespace TableTranslator.Model.ColumnConfigurations
             ValidateInput();
         }
 
-        public override string ColumnName => !string.IsNullOrEmpty(this._columnName) ? this._columnName : base.OrdinalColumnName;
-        public override Type OutputType => this.DelegateSettings.OutputType;
+        public override string ColumnName
+        {
+            get { return !string.IsNullOrEmpty(this._columnName) ? this._columnName : base.DefaultColumnName; }
+        }
+
+        public override Type OutputType
+        {
+            get { return this.DelegateSettings.OutputType; }
+        }
 
         public override object GetValueFromObject(object obj)
         {

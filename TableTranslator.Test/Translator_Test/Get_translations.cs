@@ -4,8 +4,8 @@ using System.Linq;
 using NUnit.Framework;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
-using TableTranslator.Test.Model;
-using TableTranslator.Test.Model.Profiles;
+using TableTranslator.Test.TestModels;
+using TableTranslator.Test.TestModels.Profiles;
 
 namespace TableTranslator.Test.Translator_Test
 {

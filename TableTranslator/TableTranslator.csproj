@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TableTranslator</RootNamespace>
     <AssemblyName>TableTranslator</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -53,19 +53,18 @@
   <ItemGroup>
     <Compile Include="Abstract\ICloneable.cs" />
     <Compile Include="Engines\DbParameterTranslationEngine.cs" />
-    <Compile Include="Model\ColumnConfigurations\BaseColumnConfiguration.cs" />
     <Compile Include="Model\InitializedTranslation.cs" />
     <Compile Include="Model\InitializedTranslationProfile.cs" />
-    <Compile Include="Model\ColumnConfigurations\GuidIdentityColumnConfiguration.cs" />
-    <Compile Include="Model\ColumnConfigurations\IdentityColumnConfiguration.cs" />
-    <Compile Include="Model\ColumnConfigurations\IntIdentityColumnConfiguration.cs" />
+    <Compile Include="Model\Settings\GuidIdentitySettings.cs" />
+    <Compile Include="Model\Settings\IdentitySettings.cs" />
+    <Compile Include="Model\Settings\IntIdentitySettings.cs" />
     <Compile Include="Model\TranslationProfileState.cs" />
     <Compile Include="Model\Settings\DbParameterSettings.cs" />
     <Compile Include="Exceptions\TableTranslatorConfigurationException.cs" />
     <Compile Include="Exceptions\TableTranslatorException.cs" />
     <Compile Include="Helpers\ConversionHelper.cs" />
     <Compile Include="ColumnConfigurationBuilder.cs" />
-    <Compile Include="Model\ColumnConfigurations\NonIdentityColumnConfiguration.cs" />
+    <Compile Include="Model\ColumnConfigurations\ColumnConfigurationBase.cs" />
     <Compile Include="Abstract\IColumnConfigurationBuilder.cs" />
     <Compile Include="Model\Settings\GetAllMemberSettings.cs" />
     <Compile Include="Model\Settings\ColumnSettings.cs" />

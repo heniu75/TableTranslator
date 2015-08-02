@@ -12,9 +12,9 @@ namespace TableTranslator.Engines
 
         internal abstract DataTable BuildDataTableStructure(InitializedTranslation translation);
         internal abstract DataTable FillDataTable<T>(InitializedTranslation translation, IEnumerable<T> data) where T : new();
-        internal abstract object GetColumnValue<T>(T data, NonIdentityColumnConfiguration colConfig) where T : new();
+        internal abstract object GetColumnValue<T>(T data, ColumnConfigurationBase colConfig) where T : new();
 
-        protected static DataColumn BuildDataColumn(TranslationBase translation, NonIdentityColumnConfiguration colConfig)
+        protected static DataColumn BuildDataColumn(TranslationBase translation, ColumnConfigurationBase colConfig)
         {
             return new DataColumn(
                 BuildFullColumnName(colConfig.ColumnName, translation),

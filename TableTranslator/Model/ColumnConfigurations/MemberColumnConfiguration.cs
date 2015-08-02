@@ -5,7 +5,7 @@ using TableTranslator.Helpers;
 
 namespace TableTranslator.Model.ColumnConfigurations
 {
-    public sealed class MemberColumnConfiguration : NonIdentityColumnConfiguration
+    public sealed class MemberColumnConfiguration : ColumnConfigurationBase
     {
         private string _relativePropertyPath;
         private string _columnName;
@@ -32,11 +32,17 @@ namespace TableTranslator.Model.ColumnConfigurations
             ValidateInput();
         }
 
-        public string RelativePropertyPath => !string.IsNullOrEmpty(this._relativePropertyPath) ? this._relativePropertyPath : this.MemberInfo.Name;
+        public string RelativePropertyPath
+        {
+            get { return !string.IsNullOrEmpty(this._relativePropertyPath) ? this._relativePropertyPath : this.MemberInfo.Name; }
+        }
 
-        public override string ColumnName => !string.IsNullOrEmpty(this._columnName) ? this._columnName : this.MemberInfo.Name;
+        public override string ColumnName
+        {
+            get { return !string.IsNullOrEmpty(this._columnName) ? this._columnName : this.MemberInfo.Name; }
+        }
 
-        public override Type OutputType => this.MemberInfo.GetMemberType();
+        public override Type OutputType { get { return this.MemberInfo.GetMemberType(); }}
 
         public override object GetValueFromObject(object obj)
         {

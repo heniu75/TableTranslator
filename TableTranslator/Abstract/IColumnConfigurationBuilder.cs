@@ -10,7 +10,7 @@ namespace TableTranslator.Abstract
     {
         SimpleValueColumnConfiguration BuildSimpleValueColumnConfiguration<T>(T value, ColumnSettings<T> columnSettings);
         DelegateColumnConfiguration BuildDelegateColumnConfiguration<T, K>(Func<T, K> func, ColumnSettings<K> columnSettings);
-        NonIdentityColumnConfiguration BuildMemberColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new();
-        NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings) where T : new();
+        ColumnConfigurationBase BuildMemberColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new();
+        ColumnConfigurationBase BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings) where T : new();
     }
 }

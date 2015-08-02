@@ -1,5 +1,5 @@
 ﻿using System;
-using TableTranslator.Test.Model;
+using TableTranslator.Test.TestModels;
 
 namespace TableTranslator.Test
 {
