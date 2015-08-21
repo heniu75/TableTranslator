@@ -27,5 +27,10 @@ namespace TableTranslator.Test
             Translator.RemoveAllProfiles();
             Translator.ApplyUpdates();
         }
+
+        public static bool IsSequential(this List<long> array, long increment = 1)
+        {
+            return array.Zip(array.Skip(1), (a, b) => (a + increment) == b).All(x => x);
+        }
     }
 }

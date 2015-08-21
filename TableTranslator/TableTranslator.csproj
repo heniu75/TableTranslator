@@ -54,11 +54,12 @@
     <Compile Include="Abstract\ICloneable.cs" />
     <Compile Include="Engines\DbParameterTranslationEngine.cs" />
     <Compile Include="Model\ColumnConfigurations\BaseColumnConfiguration.cs" />
+    <Compile Include="Model\ColumnConfigurations\Identity\ProviderIdentityColumnConfiguration.cs" />
     <Compile Include="Model\InitializedTranslation.cs" />
     <Compile Include="Model\InitializedTranslationProfile.cs" />
-    <Compile Include="Model\ColumnConfigurations\GuidIdentityColumnConfiguration.cs" />
-    <Compile Include="Model\ColumnConfigurations\IdentityColumnConfiguration.cs" />
-    <Compile Include="Model\ColumnConfigurations\IntIdentityColumnConfiguration.cs" />
+    <Compile Include="Model\ColumnConfigurations\Identity\GuidIdentityColumnConfiguration.cs" />
+    <Compile Include="Model\ColumnConfigurations\Identity\IdentityColumnConfiguration.cs" />
+    <Compile Include="Model\ColumnConfigurations\Identity\SeededIdentityColumnConfiguration.cs" />
     <Compile Include="Model\TranslationProfileState.cs" />
     <Compile Include="Model\Settings\DbParameterSettings.cs" />
     <Compile Include="Exceptions\TableTranslatorConfigurationException.cs" />

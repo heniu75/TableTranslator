@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.Identity;
 
 namespace TableTranslator.Test.ColumnConfiguration_Test.GuidIdentityColumnConfiguration_Test.SadPath
 {

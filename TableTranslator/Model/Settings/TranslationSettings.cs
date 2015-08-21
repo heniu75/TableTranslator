@@ -1,5 +1,5 @@
 ﻿using TableTranslator.Abstract;
-using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.Identity;
 
 namespace TableTranslator.Model.Settings
 {
