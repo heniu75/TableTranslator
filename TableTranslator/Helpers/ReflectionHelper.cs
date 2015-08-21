@@ -24,7 +24,7 @@ namespace TableTranslator.Helpers
             var body = lambda.Body as MemberExpression;
             if (body == null)
             {
-                throw new ArgumentException("The body of the lambda expression must be a MemberExpression.", "lambda");
+                throw new ArgumentException("The body of the lambda expression must be a MemberExpression.", nameof(lambda));
             }
 
             return body.Member;
@@ -152,8 +152,8 @@ namespace TableTranslator.Helpers
         internal static string GetMemberRelativePathNameFromLambda<TSource, TResult>(Expression<Func<TSource, TResult>> lambda)
         {
             return lambda.Body.ToString()
-                .Replace(string.Format("{0}.", lambda.Parameters.First()), string.Empty)
-                .Replace(string.Format("{0}.", typeof(TSource).Name), string.Empty); // allows us to get static members
+                .Replace($"{lambda.Parameters.First()}.", string.Empty)
+                .Replace($"{typeof (TSource).Name}.", string.Empty); // allows us to get static members
         }
 
         /// <summary>

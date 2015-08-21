@@ -153,7 +153,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
+            PreTranslateValidate();
             return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
         }
 
@@ -161,7 +161,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDataTable().");
+            PreTranslateValidate();
             return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
         }
 
@@ -169,7 +169,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
+            PreTranslateValidate();
             var table = _engines.Single(x => x.GetType() == typeof(DbParameterTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
             return WrapinDbParameter(table, dbParameterSettings);
         }
@@ -178,7 +178,7 @@ namespace TableTranslator
             where T : TranslationProfile, new()
             where K : new()
         {
-            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator before calling TranslateToDbParameter().");
+            PreTranslateValidate();
             var table = _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
             return WrapinDbParameter(table, dbParameterSettings);
         }
@@ -187,7 +187,7 @@ namespace TableTranslator
         {
             if (dbParameterSettings == null)
             {
-                throw new ArgumentNullException("dbParameterSettings");
+                throw new ArgumentNullException(nameof(dbParameterSettings));
             }
 
             dataTable.TableName = dbParameterSettings.DatabaseObjectName;
@@ -202,10 +202,15 @@ namespace TableTranslator
                     };
                 case DatabaseType.Oracle:
                 case DatabaseType.MySql:
-                    throw new NotImplementedException(string.Format("Database type {0} has not been implemented yet.", dbParameterSettings.DatabaseType));
+                    throw new NotImplementedException($"Database type {dbParameterSettings.DatabaseType} has not been implemented yet.");
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private static void PreTranslateValidate()
+        {
+            if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator by calling 'Translator.Initialize()' before perfoming a translation.");
         }
 
         #endregion
