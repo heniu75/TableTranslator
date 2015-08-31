@@ -8,7 +8,7 @@ namespace TableTranslator.Test
         [SetUp]
         public virtual void Setup()
         {
-            Translator.UnloadAll();
+            Translator.Uninitialize();
         }
     }
 }

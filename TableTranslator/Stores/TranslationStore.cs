@@ -9,7 +9,7 @@ using TableTranslator.Helpers;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator
+namespace TableTranslator.Stores
 {
     internal class TranslationStore : ITranslationStore
     {

@@ -16,7 +16,7 @@ namespace TableTranslator.Test.Translator_Test
         public void Calling_UnloadAll_sets_the_translator_as_being_not_initialized()
         {
             Translator.Initialize();
-            Translator.UnloadAll();
+            Translator.Uninitialize();
             Assert.IsFalse(Translator.IsInitialized);
         }
     }

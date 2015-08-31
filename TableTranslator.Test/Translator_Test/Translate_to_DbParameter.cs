@@ -24,8 +24,8 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(people, "Translation1",
-                new DbParameterSettings("myParam", "myDbObjectName"));
+            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(people,
+                new DbParameterSettings("myParam", "myDbObjectName"), "Translation1");
             Assert.AreEqual("myDbObjectName", ((DataTable)dbParam.Value).TableName);
         }
 
@@ -34,8 +34,8 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(people, "Translation1",
-                new DbParameterSettings("myParam", "myDbObjectName"));
+            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(people,
+                new DbParameterSettings("myParam", "myDbObjectName"), "Translation1");
             Assert.AreEqual("myParam", dbParam.ParameterName);
         }
 
@@ -44,8 +44,8 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(people, "Translation1",
-                new DbParameterSettings("myParam", "myDbObjectName"));
+            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(people,
+                new DbParameterSettings("myParam", "myDbObjectName"), "Translation1");
             Assert.AreEqual(DbType.Object, dbParam.DbType);
             Assert.AreEqual(SqlDbType.Structured, ((SqlParameter)dbParam).SqlDbType);
         }
@@ -55,8 +55,8 @@ namespace TableTranslator.Test.Translator_Test
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(new List<TestPerson> {new TestPerson {PublicProperty = null, PublicField = 102}}, "Translation1",
-                new DbParameterSettings("myParam", "myDbObjectName"));
+            var dbParam = Translator.TranslateToDbParameter<BasicProfile, TestPerson>(new List<TestPerson> {new TestPerson {PublicProperty = null, PublicField = 102}},
+                new DbParameterSettings("myParam", "myDbObjectName"), "Translation1");
             Assert.AreEqual(((DataTable) dbParam.Value).Rows[0][0], DBNull.Value);
         }
     }

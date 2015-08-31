@@ -27,7 +27,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         {
             Translator.AddProfile<BasicProfile>();
             Translator.ApplyUpdates();
-            Assert.Throws<ArgumentNullException>(() => Translator.TranslateToDbParameter<BasicProfile, TestPerson>(new List<TestPerson>(), "Translation1", null));
+            Assert.Throws<ArgumentNullException>(() => Translator.TranslateToDbParameter<BasicProfile, TestPerson>(new List<TestPerson>(), null, "Translation1"));
         }
     }
 }

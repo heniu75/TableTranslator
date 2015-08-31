@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TableTranslator
 {
-    public class TypeComparer : IEqualityComparer<Type>
+    internal class TypeComparer : IEqualityComparer<Type>
     {
         public bool Equals(Type x, Type y)
         {
