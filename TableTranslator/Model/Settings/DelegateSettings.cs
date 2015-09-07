@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using TableTranslator.Exceptions;
 
 namespace TableTranslator.Model.Settings
@@ -17,7 +18,7 @@ namespace TableTranslator.Model.Settings
                 throw new ArgumentNullException();
             }
 
-            var delegateParameters = delegateFunction.Method.GetParameters();
+            var delegateParameters = delegateFunction.Method.GetParameters().Where(x => x.ParameterType != typeof(Closure)).ToList();
             var delegateReturnType = delegateFunction.Method.ReturnType;
 
             if (delegateParameters.Count() != 1)
@@ -31,7 +32,7 @@ namespace TableTranslator.Model.Settings
             }
 
             this.DelegateFunction = delegateFunction;
-            this.InputType = delegateParameters[0].ParameterType; // checking above that it has only one parameter
+            this.InputType = delegateParameters.First().ParameterType; // checking above that it has only one parameter
             this.OutputType = delegateReturnType;
         }
     }

@@ -25,41 +25,30 @@ namespace TableTranslator.Model
             this.Translation = translation;
         }
 
-        public TranslationExpression<T> ForSimpleValue<K>(K value)
+        public TranslationExpression<T> AddColumnConfiguration<K>(K value)
         {
-            return ForSimpleValue(value, new ColumnSettings<K>());
+            return AddColumnConfiguration(value, new ColumnSettings<K>());
         }
 
-        public TranslationExpression<T> ForSimpleValue<K>(K value, ColumnSettings<K> settings)
+        public TranslationExpression<T> AddColumnConfiguration<K>(K value, ColumnSettings<K> settings)
         {
             settings.Ordinal = this.Ordinal;
-            AddColumnConfiguration(this._colConfigBuilder.BuildSimpleValueColumnConfiguration(value, settings));
+            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildSimpleValueColumnConfiguration(value, settings));
             return this;
         }
 
-
-        public TranslationExpression<T> ForMember<K>(Expression<Func<T, K>> func)
+        public TranslationExpression<T> AddColumnConfiguration<K>(Expression<Func<T, K>> func)
         {
-            return ForMember(func, new ColumnSettings<K>());
+            return AddColumnConfiguration(func, new ColumnSettings<K>());
         }
 
-        public TranslationExpression<T> ForMember<K>(Expression<Func<T, K>> func, ColumnSettings<K> settings)
+        public TranslationExpression<T> AddColumnConfiguration<K>(Expression<Func<T, K>> func, ColumnSettings<K> settings)
         {
             settings.Ordinal = this.Ordinal;
-            AddColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(func, settings));
-            return this;
-        }
+            AddExplicitColumnConfiguration(func.Body.NodeType == ExpressionType.MemberAccess
+                ? this._colConfigBuilder.BuildColumnConfiguration(func, settings)
+                : this._colConfigBuilder.BuildDelegateColumnConfiguration(func.Compile(), settings));
 
-
-        public TranslationExpression<T> ForDelegate<K>(Func<T, K> func)
-        {
-            return ForDelegate(func, new ColumnSettings<K>());
-        }
-
-        public TranslationExpression<T> ForDelegate<K>(Func<T, K> func, ColumnSettings<K> settings)
-        {
-            settings.Ordinal = this.Ordinal;
-            AddColumnConfiguration(this._colConfigBuilder.BuildDelegateColumnConfiguration(func, settings));
             return this;
         }
 
@@ -74,12 +63,12 @@ namespace TableTranslator.Model
             var members = ReflectionHelper.GetAllMembers<T>(getAllMemberSettings ?? new GetAllMemberSettings());
             foreach (var mi in members)
             {
-                AddColumnConfiguration(this._colConfigBuilder.BuildMemberColumnConfiguration<T>(mi, this.Ordinal));
+                AddExplicitColumnConfiguration(this._colConfigBuilder.BuildMemberColumnConfiguration<T>(mi, this.Ordinal));
             }
             return this;
         }
 
-        public TranslationExpression<T> AddColumnConfiguration(NonIdentityColumnConfiguration config)
+        public TranslationExpression<T> AddExplicitColumnConfiguration(NonIdentityColumnConfiguration config)
         {
             if (config == null)
             {

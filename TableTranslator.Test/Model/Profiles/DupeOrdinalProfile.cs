@@ -8,8 +8,8 @@ namespace TableTranslator.Test.Model.Profiles
         protected override void Configure()
         {
             this.AddTranslation<TestPerson>()
-                .ForSimpleValue("Hello")
-                .AddColumnConfiguration(new SimpleValueColumnConfiguration(100, typeof (int), 0, "DupeOrdinal", 99));
+                .AddColumnConfiguration("Hello")
+                .AddExplicitColumnConfiguration(new SimpleValueColumnConfiguration(100, typeof (int), 0, "DupeOrdinal", 99));
         }
     }
 }

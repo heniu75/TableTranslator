@@ -37,12 +37,12 @@ namespace TableTranslator.Test.Translator_Test
             protected override void Configure()
             {
                 AddTranslation<TestPerson>(new TranslationSettings("After"))
-                    .ForMember(p => p.PublicProperty)
-                    .ForDelegate(p => UpdateProperties(p));
+                    .AddColumnConfiguration(p => p.PublicProperty)
+                    .AddColumnConfiguration(p => UpdateProperties(p));
 
                 AddTranslation<TestPerson>(new TranslationSettings("Before"))
-                    .ForDelegate(p => UpdateProperties(p))
-                    .ForMember(p => p.PublicProperty);
+                    .AddColumnConfiguration(p => UpdateProperties(p))
+                    .AddColumnConfiguration(p => p.PublicProperty);
             }
 
             public string UpdateProperties(TestPerson person)

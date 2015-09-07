@@ -8,14 +8,14 @@ namespace TableTranslator.Test.Model.Profiles
         protected override void Configure()
         {
             AddTranslation<TestPerson>(new TranslationSettings("Translation4"))
-                .ForMember(x => x.PublicProperty, new ColumnSettings<string> { ColumnName = "ColOne" })
-                .ForSimpleValue(27, new ColumnSettings<int> {ColumnName = "ColTwo"})
-                .ForDelegate(x => x.PublicField + 8, new ColumnSettings<int> { ColumnName = "ColThree" });
+                .AddColumnConfiguration(x => x.PublicProperty, new ColumnSettings<string> { ColumnName = "ColOne" })
+                .AddColumnConfiguration(27, new ColumnSettings<int> {ColumnName = "ColTwo"})
+                .AddColumnConfiguration(x => x.PublicField + 8, new ColumnSettings<int> { ColumnName = "ColThree" });
 
             AddTranslation<TestPerson>(new TranslationSettings("Translation5"))
-                .ForMember(x => x.PublicProperty, new ColumnSettings<string> { ColumnName = "ColOne" })
-                .ForSimpleValue(27, new ColumnSettings<int> { ColumnName = "ColTwo" })
-                .ForDelegate(x => x.PublicField + 8, new ColumnSettings<int> { ColumnName = "ColThree" });
+                .AddColumnConfiguration(x => x.PublicProperty, new ColumnSettings<string> { ColumnName = "ColOne" })
+                .AddColumnConfiguration(27, new ColumnSettings<int> { ColumnName = "ColTwo" })
+                .AddColumnConfiguration(x => x.PublicField + 8, new ColumnSettings<int> { ColumnName = "ColThree" });
         }
     }
 }

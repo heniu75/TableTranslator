@@ -8,7 +8,7 @@ namespace TableTranslator.Model
         private string ColumnNameSuffix { get; set; }
         private string ProfileName { get; set; }
 
-        public InitializedTranslationProfile(ICloneable<TranslationProfile> profile)
+        internal InitializedTranslationProfile(ICloneable<TranslationProfile> profile)
         {
             var clone = profile.DeepClone();
             this.ColumnNamePrefix = clone.ColumnNamePrefix;

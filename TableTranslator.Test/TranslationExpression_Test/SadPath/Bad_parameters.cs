@@ -20,7 +20,7 @@ namespace TableTranslator.Test.TranslationExpression_Test.SadPath
             protected override void Configure()
             {
                 AddTranslation<DateTime>()
-                    .AddColumnConfiguration(null);
+                    .AddExplicitColumnConfiguration(null);
             }
         }
     }

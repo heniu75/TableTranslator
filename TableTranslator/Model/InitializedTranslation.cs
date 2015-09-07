@@ -6,7 +6,7 @@ using TableTranslator.Engines;
 
 namespace TableTranslator.Model
 {
-    public class InitializedTranslation : TranslationBase
+    internal class InitializedTranslation : TranslationBase
     {
         internal readonly Dictionary<string, DataTable> Structures = new Dictionary<string, DataTable>();
 

@@ -98,8 +98,8 @@ namespace TableTranslator.Test.Translator_Test.SadPath
             protected override void Configure()
             {
                 AddTranslation<TestPerson>(new TranslationSettings("Member"))
-                    .ForMember(p => p.PublicProperty)
-                    .ForMember(p => p.InternalProperty, new ColumnSettings<string> {ColumnName = "PublicProperty"});
+                    .AddColumnConfiguration(p => p.PublicProperty)
+                    .AddColumnConfiguration(p => p.InternalProperty, new ColumnSettings<string> {ColumnName = "PublicProperty"});
             }
         }
 
@@ -108,8 +108,8 @@ namespace TableTranslator.Test.Translator_Test.SadPath
             protected override void Configure()
             {
                 AddTranslation<TestPerson>(new TranslationSettings("NonMember"))
-                    .ForSimpleValue(12)
-                    .ForMember(p => p.InternalProperty, new ColumnSettings<string> { ColumnName = "Column0" });
+                    .AddColumnConfiguration(12)
+                    .AddColumnConfiguration(p => p.InternalProperty, new ColumnSettings<string> { ColumnName = "Column0" });
             }
         }
     }
