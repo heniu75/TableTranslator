@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
-using TableTranslator.Test.Model;
-using TableTranslator.Test.Model.Profiles;
+using TableTranslator.Test.TestModel;
+using TableTranslator.Test.TestModel.Profiles;
 
 namespace TableTranslator.Test.Translator_Test
 {
@@ -37,14 +37,17 @@ namespace TableTranslator.Test.Translator_Test
             Assert.AreEqual("Chris", rows[0][0]);
             Assert.AreEqual(27, (int)rows[0][1]);
             Assert.AreEqual(108, (int)rows[0][2]);
+            Assert.AreEqual(999, (int)rows[0][3]);
 
             Assert.AreEqual("Aubrey", rows[1][0]);
             Assert.AreEqual(27, (int)rows[1][1]);
             Assert.AreEqual(109, (int)rows[1][2]);
+            Assert.AreEqual(999, (int)rows[0][3]);
 
             Assert.AreEqual("John", rows[2][0]);
             Assert.AreEqual(27, (int)rows[2][1]);
             Assert.AreEqual(110, (int)rows[2][2]);
+            Assert.AreEqual(999, (int)rows[0][3]);
         }
 
         [Test]
@@ -56,6 +59,7 @@ namespace TableTranslator.Test.Translator_Test
             Assert.AreEqual(typeof(string), cols[0].DataType);
             Assert.AreEqual(typeof(int), cols[1].DataType);
             Assert.AreEqual(typeof(int), cols[2].DataType);
+            Assert.AreEqual(typeof(int), cols[3].DataType);
         }
 
         [Test]
@@ -67,6 +71,7 @@ namespace TableTranslator.Test.Translator_Test
             Assert.AreEqual("ColOne", columnNames.First());
             Assert.AreEqual("ColTwo", columnNames.Skip(1).First());
             Assert.AreEqual("ColThree", columnNames.Skip(2).First());
+            Assert.AreEqual("ColFour", columnNames.Skip(3).First());
         }
 
         [Test]
@@ -122,7 +127,7 @@ namespace TableTranslator.Test.Translator_Test
             Translator.ApplyUpdates();
             var dt = Translator.Translate<BasicProfile, TestPerson>(null, "Translation1");
             Assert.AreEqual(0, dt.Rows.Count);
-            Assert.AreEqual(3, dt.Columns.Count);
+            Assert.AreEqual(4, dt.Columns.Count);
         }
 
         [Test]

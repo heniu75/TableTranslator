@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator.Test.Model.Profiles
+namespace TableTranslator.Test.TestModel.Profiles
 {
     public class BasicProfile : TranslationProfile
     {
@@ -12,7 +10,8 @@ namespace TableTranslator.Test.Model.Profiles
             AddTranslation<TestPerson>(new TranslationSettings("Translation1"))
                 .AddColumnConfiguration(x => x.PublicProperty, new ColumnSettings<string> { ColumnName = "ColOne" })
                 .AddColumnConfiguration(27, new ColumnSettings<int> { ColumnName = "ColTwo" })
-                .AddColumnConfiguration(x => x.PublicField + 8, new ColumnSettings<int> { ColumnName = "ColThree" });
+                .AddColumnConfiguration(x => x.PublicField + 8, new ColumnSettings<int> { ColumnName = "ColThree" })
+                .AddColumnConfiguration(x => TestPerson.ConstantField, new ColumnSettings<int> { ColumnName = "ColFour" });
 
             AddTranslation<TestPerson>(new TranslationSettings("Translation2"))
                 .AddColumnConfiguration(x => x.PublicProperty, new ColumnSettings<string> { ColumnName = "ColOne" })

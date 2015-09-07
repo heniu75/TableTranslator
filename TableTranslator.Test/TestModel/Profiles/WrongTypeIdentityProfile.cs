@@ -3,7 +3,7 @@ using TableTranslator.Model;
 using TableTranslator.Model.ColumnConfigurations.Identity;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator.Test.Model.Profiles
+namespace TableTranslator.Test.TestModel.Profiles
 {
     public class WrongTypeIdentityProfile : TranslationProfile
     {

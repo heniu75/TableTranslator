@@ -1,7 +1,7 @@
 ﻿using TableTranslator.Model;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator.Test.Model.Profiles
+namespace TableTranslator.Test.TestModel.Profiles
 {
     public class BasicProfile2 : TranslationProfile
     {

@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 using TableTranslator.Model.ColumnConfigurations;
-using TableTranslator.Test.Model;
+using TableTranslator.Test.TestModel;
 
 namespace TableTranslator.Test.ColumnConfiguration_Test.MemberColumnConfiguration_Test
 {

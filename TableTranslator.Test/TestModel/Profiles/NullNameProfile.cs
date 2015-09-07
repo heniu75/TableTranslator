@@ -1,6 +1,6 @@
 using TableTranslator.Model;
 
-namespace TableTranslator.Test.Model.Profiles
+namespace TableTranslator.Test.TestModel.Profiles
 {
     public class NullNameProfile : TranslationProfile
     {

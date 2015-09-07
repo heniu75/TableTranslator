@@ -33,7 +33,7 @@ namespace TableTranslator.Model
         public TranslationExpression<T> AddColumnConfiguration<K>(K value, ColumnSettings<K> settings)
         {
             settings.Ordinal = this.Ordinal;
-            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildSimpleValueColumnConfiguration(value, settings));
+            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(value, settings));
             return this;
         }
 
@@ -45,25 +45,21 @@ namespace TableTranslator.Model
         public TranslationExpression<T> AddColumnConfiguration<K>(Expression<Func<T, K>> func, ColumnSettings<K> settings)
         {
             settings.Ordinal = this.Ordinal;
-            AddExplicitColumnConfiguration(func.Body.NodeType == ExpressionType.MemberAccess
-                ? this._colConfigBuilder.BuildColumnConfiguration(func, settings)
-                : this._colConfigBuilder.BuildDelegateColumnConfiguration(func.Compile(), settings));
-
+            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(func, settings));
             return this;
         }
-
 
         public TranslationExpression<T> ForAllMembers()
         {
             return ForAllMembers(new GetAllMemberSettings());
         }
 
-        public TranslationExpression<T> ForAllMembers(GetAllMemberSettings getAllMemberSettings)
+        public TranslationExpression<T> ForAllMembers(GetAllMemberSettings settings)
         {
-            var members = ReflectionHelper.GetAllMembers<T>(getAllMemberSettings ?? new GetAllMemberSettings());
+            var members = ReflectionHelper.GetAllMembers<T>(settings ?? new GetAllMemberSettings());
             foreach (var mi in members)
             {
-                AddExplicitColumnConfiguration(this._colConfigBuilder.BuildMemberColumnConfiguration<T>(mi, this.Ordinal));
+                AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration<T>(mi, this.Ordinal));
             }
             return this;
         }

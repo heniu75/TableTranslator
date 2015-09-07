@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using TableTranslator.Model.ColumnConfigurations;
 using TableTranslator.Model.Settings;
-using TableTranslator.Test.Model;
+using TableTranslator.Test.TestModel;
 
 namespace TableTranslator.Test.ColumnConfiguration_Test.DelegateColumnConfiguration_Test
 {

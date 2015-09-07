@@ -8,9 +8,8 @@ namespace TableTranslator.Abstract
 {
     public interface IColumnConfigurationBuilder
     {
-        SimpleValueColumnConfiguration BuildSimpleValueColumnConfiguration<T>(T value, ColumnSettings<T> columnSettings);
-        DelegateColumnConfiguration BuildDelegateColumnConfiguration<T, K>(Func<T, K> func, ColumnSettings<K> columnSettings);
-        NonIdentityColumnConfiguration BuildMemberColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new();
-        NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings) where T : new();
+        NonIdentityColumnConfiguration BuildColumnConfiguration<T>(T value, ColumnSettings<T> columnSettings);
+        NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings);
+        NonIdentityColumnConfiguration BuildColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new();
     }
 }

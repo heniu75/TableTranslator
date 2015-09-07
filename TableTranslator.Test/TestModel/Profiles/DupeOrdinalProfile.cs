@@ -1,7 +1,7 @@
 using TableTranslator.Model;
 using TableTranslator.Model.ColumnConfigurations;
 
-namespace TableTranslator.Test.Model.Profiles
+namespace TableTranslator.Test.TestModel.Profiles
 {
     public class DupeOrdinalProfile : TranslationProfile
     {

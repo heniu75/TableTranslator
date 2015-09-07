@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using TableTranslator.Exceptions;
-using TableTranslator.Test.Model.Profiles;
+using TableTranslator.Test.TestModel.Profiles;
 
 namespace TableTranslator.Test.ColumnConfiguration_Test.SeededIdentityColumnConfiguration_Test.SadPath
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TableTranslator.Test.Model
+namespace TableTranslator.Test.TestModel
 {
     public class TestPerson
     {
