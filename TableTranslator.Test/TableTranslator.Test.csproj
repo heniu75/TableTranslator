@@ -115,7 +115,7 @@
     <Compile Include="InitializedTranslatorTestBase.cs" />
     <Compile Include="Translator_Test\Translate_data_results.cs" />
     <Compile Include="Translator_Test\Translate_to_DT.cs" />
-    <Compile Include="UnloadedTranslatorTestBase.cs" />
+    <Compile Include="UnInitializedTranslatorTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

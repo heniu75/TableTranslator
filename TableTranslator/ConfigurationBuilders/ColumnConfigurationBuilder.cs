@@ -6,7 +6,7 @@ using TableTranslator.Helpers;
 using TableTranslator.Model.ColumnConfigurations;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator
+namespace TableTranslator.ConfigurationBuilders
 {
     internal class ColumnConfigurationBuilder : IColumnConfigurationBuilder
     {

@@ -6,8 +6,8 @@ namespace TableTranslator.Model.Settings
     {
         public DbParameterSettings(string parameterName, string databaseObjectName)
         {
-            if (string.IsNullOrWhiteSpace(parameterName)) throw new ArgumentNullException("parameterName");
-            if (string.IsNullOrWhiteSpace(databaseObjectName)) throw new ArgumentNullException("databaseObjectName");
+            if (string.IsNullOrWhiteSpace(parameterName)) throw new ArgumentNullException(nameof(parameterName));
+            if (string.IsNullOrWhiteSpace(databaseObjectName)) throw new ArgumentNullException(nameof(databaseObjectName));
 
             this.DatabaseObjectName = databaseObjectName;
             this.DatabaseType = DatabaseType.Sql;

@@ -7,7 +7,7 @@ using TableTranslator.Test.TestModel.Profiles;
 namespace TableTranslator.Test.Translator_Test.SadPath
 {
     [TestFixture]
-    public class Translator_sad_path : UnloadedTranslatorTestBase
+    public class Translator_sad_path : UnInitializedTranslatorTestBase
     {
         [Test]
         public void Calling_ApplyUpdates_before_Initialize_throws_TableTranslationException()

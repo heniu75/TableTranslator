@@ -19,7 +19,7 @@ namespace TableTranslator.Model
 
         public override string ToString()
         {
-            return string.Format("[ProfileName:{0}],[TranslationName:{1}],[TypeName:{2}]", this._profileName, this._translationName, this._typeName);
+            return $"[ProfileName:{this._profileName}],[TranslationName:{this._translationName}],[TypeName:{this._typeName}]";
         }
 
         internal static TranslationUniqueIdentifier GetInstance(TranslationBase translation)

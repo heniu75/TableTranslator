@@ -85,7 +85,7 @@ namespace TableTranslator
         /// <param name="translationProfiles">Profiles to add</param>
         public static void AddProfiles(IEnumerable<TranslationProfile> translationProfiles)
         {
-            if (translationProfiles == null) throw new ArgumentNullException("translationProfiles");
+            if (translationProfiles == null) throw new ArgumentNullException(nameof(translationProfiles));
             var list = translationProfiles as TranslationProfile[] ?? translationProfiles.ToArray();
             if (list.Any(x => x == null)) throw new ArgumentException("Argument translationProfiles contained a item that was null.");
             foreach (var tp in list)
@@ -303,6 +303,8 @@ namespace TableTranslator
             return WrapinDbParameter(table, dbParameterSettings);
         }
 
+        #endregion
+
         private static DbParameter WrapinDbParameter(DataTable dataTable, DbParameterSettings dbParameterSettings)
         {
             if (dbParameterSettings == null)
@@ -332,7 +334,5 @@ namespace TableTranslator
         {
             if (!IsInitialized) throw new TableTranslatorException("You must initialize the translator by calling 'Translator.Initialize()' before perfoming a translation.");
         }
-
-        #endregion
     }
 }

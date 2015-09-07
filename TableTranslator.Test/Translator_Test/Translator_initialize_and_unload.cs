@@ -3,7 +3,7 @@
 namespace TableTranslator.Test.Translator_Test
 {
     [TestFixture]
-    public class Translator_initialize_and_unload : UnloadedTranslatorTestBase
+    public class Translator_initialize_and_unload : UnInitializedTranslatorTestBase
     {
         [Test]
         public void Calling_Initialize_sets_the_translator_as_being_initialized()

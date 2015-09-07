@@ -65,7 +65,7 @@
     <Compile Include="Exceptions\TableTranslatorConfigurationException.cs" />
     <Compile Include="Exceptions\TableTranslatorException.cs" />
     <Compile Include="Helpers\ConversionHelper.cs" />
-    <Compile Include="ColumnConfigurationBuilder.cs" />
+    <Compile Include="ConfigurationBuilders\ColumnConfigurationBuilder.cs" />
     <Compile Include="Model\ColumnConfigurations\NonIdentityColumnConfiguration.cs" />
     <Compile Include="Abstract\IColumnConfigurationBuilder.cs" />
     <Compile Include="Model\Settings\GetAllMemberSettings.cs" />
@@ -83,7 +83,7 @@
     <Compile Include="Model\ColumnConfigurations\SimpleValueColumnConfiguration.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="Engines\SimpleTranslationEngine.cs" />
-    <Compile Include="Model\TranslationExpression.cs" />
+    <Compile Include="TranslationExpression.cs" />
     <Compile Include="Model\TranslationUniqueIdentifier.cs" />
     <Compile Include="Translator.cs" />
     <Compile Include="Model\Translation.cs" />

@@ -22,13 +22,13 @@ namespace TableTranslator.Model
             if (this.ColumnConfigurations.Any(cc => cc.Ordinal == config.Ordinal))
             {
                 throw new TableTranslatorConfigurationException(
-                    string.Format("Duplicate ordinal value ({0}). This translation already has a column configuration with this ordinal.", config.Ordinal),
+                    $"Duplicate ordinal value ({config.Ordinal}). This translation already has a column configuration with this ordinal.",
                     this.TranslationProfile);
             }
             if (this.ColumnConfigurations.Any(cc => cc.ColumnName == config.ColumnName))
             {
                 throw new TableTranslatorConfigurationException(
-                    string.Format("Duplicate column name ({0}). This translation already has a column configuration with this column name.", config.ColumnName),
+                    $"Duplicate column name ({config.ColumnName}). This translation already has a column configuration with this column name.",
                     this.TranslationProfile);
             }
             this.ColumnConfigurations.Add(config);

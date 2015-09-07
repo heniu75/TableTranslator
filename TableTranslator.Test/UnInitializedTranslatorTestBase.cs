@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace TableTranslator.Test
 {
     [Category("PreInit")]
-    public class UnloadedTranslatorTestBase
+    public class UnInitializedTranslatorTestBase
     {
         [SetUp]
         public virtual void Setup()
