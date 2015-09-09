@@ -77,12 +77,21 @@ namespace TableTranslator
             return this;
         }
 
-        public TranslationExpression<T> ForAllMembers()
+        /// <summary>
+        /// Adds a column configuration for all members of T to a translation 
+        /// </summary>
+        /// <returns>Translation expression used to add column configurations to a translation</returns>
+        public TranslationExpression<T> AddColumnConfigurationForAllMembers()
         {
-            return ForAllMembers(new GetAllMemberSettings());
+            return AddColumnConfigurationForAllMembers(new GetAllMemberSettings());
         }
 
-        public TranslationExpression<T> ForAllMembers(GetAllMemberSettings settings)
+        /// <summary>
+        /// Adds a column configuration for all members of T to a translation 
+        /// </summary>
+        /// <param name="settings">Additional settings for determining which members to include</param>
+        /// <returns>Translation expression used to add column configurations to a translation</returns>
+        public TranslationExpression<T> AddColumnConfigurationForAllMembers(GetAllMemberSettings settings)
         {
             var members = ReflectionHelper.GetAllMembers<T>(settings ?? new GetAllMemberSettings());
             foreach (var mi in members)
@@ -92,6 +101,11 @@ namespace TableTranslator
             return this;
         }
 
+        /// <summary>
+        /// Adds a column configuration to a translation using the most explicit level of detail (advanced, only use if AddColumnConfiguration() cannot)
+        /// </summary>
+        /// <param name="config">Explicit configuration of a non identity column to be added to a translation</param>
+        /// <returns>Translation expression used to add column configurations to a translation</returns>
         public TranslationExpression<T> AddExplicitColumnConfiguration(NonIdentityColumnConfiguration config)
         {
             if (config == null)

@@ -11,10 +11,10 @@ namespace TableTranslator.Test.TestModel.Profiles
         protected override void Configure()
         {
             AddTranslation<TestPerson>(new TranslationSettings("NullPrefixSuffix"))
-                .ForAllMembers();
+                .AddColumnConfigurationForAllMembers();
 
             AddTranslation<TestPerson>(new TranslationSettings("TranslationLevelNullPrefixSuffix", null, null))
-                .ForAllMembers();
+                .AddColumnConfigurationForAllMembers();
         }
     }
 }

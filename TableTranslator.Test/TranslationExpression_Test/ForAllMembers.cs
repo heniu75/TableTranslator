@@ -61,22 +61,22 @@ namespace TableTranslator.Test.TranslationExpression_Test
             protected override void Configure()
             {
                 AddTranslation<AllMembersModel>(new TranslationSettings("All"))
-                    .ForAllMembers();
+                    .AddColumnConfigurationForAllMembers();
 
                 AddTranslation<AllMembersModel>(new TranslationSettings("AllByNameDesc"))
-                    .ForAllMembers(new GetAllMemberSettings
+                    .AddColumnConfigurationForAllMembers(new GetAllMemberSettings
                     {
                         Orderer = new NameDescComparer()
                     });
 
                 AddTranslation<AllMembersModel>(new TranslationSettings("AllWithMPredicate"))
-                    .ForAllMembers(new GetAllMemberSettings
+                    .AddColumnConfigurationForAllMembers(new GetAllMemberSettings
                     {
                         Predicate = x => x.Name.ToUpper().Contains("M")
                     });
 
                 AddTranslation<AllMembersModel>(new TranslationSettings("AllNoStaticBindingFlags"))
-                    .ForAllMembers(new GetAllMemberSettings
+                    .AddColumnConfigurationForAllMembers(new GetAllMemberSettings
                     {
                         BindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public
                     });

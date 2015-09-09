@@ -11,16 +11,16 @@ namespace TableTranslator.Test.TestModel.Profiles
         protected override void Configure()
         {
             AddTranslation<TestPerson>(new TranslationSettings("ProfileInherited1"))
-                .ForAllMembers();
+                .AddColumnConfigurationForAllMembers();
 
             AddTranslation<TestPerson>(new TranslationSettings("ProfileInherited2"))
-                .ForAllMembers();
+                .AddColumnConfigurationForAllMembers();
 
             AddTranslation<TestPerson>(new TranslationSettings("TranslationSpecific", "TRANPRE_", "_TRANSUF"))
-                .ForAllMembers();
+                .AddColumnConfigurationForAllMembers();
 
             AddTranslation<TestPerson>(new TranslationSettings("NullTranslationSpecific", null, null ))
-                .ForAllMembers();
+                .AddColumnConfigurationForAllMembers();
         }
     }
 }
