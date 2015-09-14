@@ -71,6 +71,8 @@
     <Compile Include="ColumnConfiguration_Test\SeededIdentityColumnConfiguration_Test\Seeded_correctly.cs" />
     <Compile Include="ColumnConfiguration_Test\IdentityColumnConfiguration_Test\Defaults_set_properly.cs" />
     <Compile Include="ColumnConfiguration_Test\IdentityColumnConfiguration_Test\SadPath\Sad_path.cs" />
+    <Compile Include="TestModel\Profiles\BadTypeSeededIdentityProfile.cs" />
+    <Compile Include="TestModel\Profiles\ColumnConfigurationTestProfile.cs" />
     <Compile Include="TestModel\Profiles\WrongTypeIdentityProfile.cs" />
     <Compile Include="TestModel\Profiles\IdentityProfile.cs" />
     <Compile Include="TestModel\Profiles\ZeroIncrementSeededIdentityProfile.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="TranslationProfile_Test\Default_values_and_initialization.cs" />
     <Compile Include="TestModel\Profiles\NullNameProfile.cs" />
     <Compile Include="TestModel\Profiles\SpyProfile.cs" />
+    <Compile Include="Translation_Test\Default_values_and_initialization.cs" />
     <Compile Include="Translator_Test\Get_translations.cs" />
     <Compile Include="Translator_Test\Profile_actions.cs" />
     <Compile Include="Translator_Test\SadPath\Profile_sad_path.cs" />

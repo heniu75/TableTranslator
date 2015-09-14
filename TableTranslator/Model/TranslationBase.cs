@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using TableTranslator.Helpers;
@@ -24,6 +25,20 @@ namespace TableTranslator.Model
         /// Additional settings that help define the translation
         /// </summary>
         public TranslationSettings TranslationSettings { get; internal set; }
+
+        /// <summary>
+        /// Gets the column configurations defined in the translation
+        /// </summary>
+        /// <returns>A read-only list of the column configurations defined in the translation</returns>
+        public ReadOnlyCollection<BaseColumnConfiguration> GetColumnConfigurations()
+        {
+            var colConfigs = new List<BaseColumnConfiguration>(this.ColumnConfigurations);
+            if (this.TranslationSettings.IdentityColumnConfiguration != null)
+            {
+                colConfigs.Add(this.TranslationSettings.IdentityColumnConfiguration);
+            }
+            return colConfigs.OrderBy(x => x.Ordinal).ToList().AsReadOnly();
+        }
 
         protected internal TranslationBase(Type type, TranslationProfile translationProfile, TranslationSettings translationSettings)
         {

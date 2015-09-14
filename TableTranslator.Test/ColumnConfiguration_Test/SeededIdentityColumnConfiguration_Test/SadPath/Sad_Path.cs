@@ -13,5 +13,12 @@ namespace TableTranslator.Test.ColumnConfiguration_Test.SeededIdentityColumnConf
             Translator.AddProfile<ZeroIncrementSeededIdentityProfile>();
             Assert.Throws<TableTranslatorConfigurationException>(() => Translator.ApplyUpdates());
         }
+
+        [Test]
+        public void Seeded_with_non_long_parseable_type_throws_TableTranslatorConfigurationException()
+        {
+            Translator.AddProfile<BadTypeSeededIdentityProfile>();
+            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.ApplyUpdates());
+        }
     }
 }

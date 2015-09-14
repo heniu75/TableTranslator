@@ -34,15 +34,6 @@ namespace TableTranslator.Model
             this.ColumnConfigurations.Add(config);
         }
 
-        /// <summary>
-        /// Gets the column configurations defined in the translation
-        /// </summary>
-        /// <returns>A read-only list of the column configurations defined in the translation</returns>
-        public ReadOnlyCollection<NonIdentityColumnConfiguration> GetColumnConfigurations()
-        {
-            return this.ColumnConfigurations.AsReadOnly();
-        }
-
         public Translation ShallowClone()
         {
             return this.MemberwiseClone() as Translation;
