@@ -17,8 +17,8 @@ namespace TableTranslator.Helpers
         /// <summary>
         /// Gets the member from a LambdaExpression
         /// </summary>
-        /// <param name="lambda"></param>
-        /// <returns></returns>
+        /// <param name="lambda">Labda expression from which to get the members information</param>
+        /// <returns>Member info for the member in the lambda expression</returns>
         internal static MemberInfo GetMemberInfoFromLambda(LambdaExpression lambda)
         {
             var body = lambda.Body as MemberExpression;
@@ -31,10 +31,10 @@ namespace TableTranslator.Helpers
         }
 
         /// <summary>
-        /// Gets the type of the member info
+        /// Gets the type for the member info
         /// </summary>
-        /// <param name="memberInfo"></param>
-        /// <returns></returns>
+        /// <param name="memberInfo">Member info from which to get the type</param>
+        /// <returns>The type of the member info</returns>
         internal static Type GetMemberType(this MemberInfo memberInfo)
         {
             var propertyInfo = memberInfo as PropertyInfo;
@@ -45,11 +45,21 @@ namespace TableTranslator.Helpers
             return fieldInfo?.FieldType;
         }
 
+        /// <summary>
+        /// Gets the type for regular types and get the underlying type for nullable value types (e.g. int? will return int)
+        /// </summary>
+        /// <param name="type">Type to get the pure type for</param>
+        /// <returns>The pure type</returns>
         internal static Type GetPureType(this Type type)
         {
             return Nullable.GetUnderlyingType(type) ?? type;
         }
 
+        /// <summary>
+        /// Determines if null can be assigned to the type
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>Whenter or not null can be assigned to the type</returns>
         internal static bool IsNullAssignable(this Type type)
         {
             // string can be null even though it doesn't implement Nullable<> and is a value type
@@ -73,19 +83,24 @@ namespace TableTranslator.Helpers
             }
         }
 
-        public static string GetFormattedName(this Type t)
+        /// <summary>
+        /// Formats the name of the type to be more readable (e.g. generics, enumerables, etc.)
+        /// </summary>
+        /// <param name="type">Type to build formatted name for</param>
+        /// <returns>Formatted name of the type</returns>
+        public static string BuildFormattedName(this Type type)
         {
-            if (!t.IsGenericType)
-                return t.Name;
+            if (!type.IsGenericType)
+                return type.Name;
 
             var sb = new StringBuilder();
-            sb.Append(t.Name.Substring(0, t.Name.IndexOf('`')));
+            sb.Append(type.Name.Substring(0, type.Name.IndexOf('`')));
             sb.Append('<');
             var appendComma = false;
-            foreach (var arg in t.GetGenericArguments())
+            foreach (var arg in type.GetGenericArguments())
             {
                 if (appendComma) sb.Append(',');
-                sb.Append(GetFormattedName(arg));
+                sb.Append(BuildFormattedName(arg));
                 appendComma = true;
             }
             sb.Append('>');

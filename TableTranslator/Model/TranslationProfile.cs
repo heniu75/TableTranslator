@@ -23,7 +23,7 @@ namespace TableTranslator.Model
         /// <summary>
         /// Name of the profile as registered with the translator
         /// </summary>
-        public virtual string ProfileName => this.GetType().GetFormattedName();
+        public virtual string ProfileName => this.GetType().BuildFormattedName();
 
         /// <summary>
         /// Prefix for all column names for all column configurations in the profile

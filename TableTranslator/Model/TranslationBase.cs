@@ -29,7 +29,7 @@ namespace TableTranslator.Model
         {
             if (string.IsNullOrEmpty(translationSettings.TranslationName))
             {
-                translationSettings.TranslationName = type.GetFormattedName();
+                translationSettings.TranslationName = type.BuildFormattedName();
             }
 
             this.TranslationProfile = translationProfile;
