@@ -7,6 +7,7 @@ using System.Linq;
 using TableTranslator.Abstract;
 using TableTranslator.Engines;
 using TableTranslator.Exceptions;
+using TableTranslator.Helpers;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
 using TableTranslator.Stores;
@@ -282,7 +283,7 @@ namespace TableTranslator
         {
             PreTranslateValidation();
             var table = _engines.Single(x => x.GetType() == typeof(DbParameterTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
-            return WrapinDbParameter(table, dbParameterSettings);
+            return table.WrapinDbParameter(dbParameterSettings);
         }
 
         /// <summary>
@@ -300,35 +301,10 @@ namespace TableTranslator
         {
             PreTranslateValidation();
             var table = _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
-            return WrapinDbParameter(table, dbParameterSettings);
+            return table.WrapinDbParameter(dbParameterSettings);
         }
 
         #endregion
-
-        private static DbParameter WrapinDbParameter(DataTable dataTable, DbParameterSettings dbParameterSettings)
-        {
-            if (dbParameterSettings == null)
-            {
-                throw new ArgumentNullException(nameof(dbParameterSettings));
-            }
-
-            dataTable.TableName = dbParameterSettings.DatabaseObjectName;
-
-            switch (dbParameterSettings.DatabaseType)
-            {
-                case DatabaseType.Sql:
-                    return new SqlParameter(dbParameterSettings.ParameterName, SqlDbType.Structured)
-                    {
-                        Value = dataTable,
-                        TypeName = dbParameterSettings.DatabaseObjectName
-                    };
-                case DatabaseType.Oracle:
-                case DatabaseType.MySql:
-                    throw new NotImplementedException($"Database type {dbParameterSettings.DatabaseType} has not been implemented yet.");
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
 
         private static void PreTranslateValidation()
         {
