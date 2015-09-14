@@ -10,22 +10,22 @@ namespace TableTranslator.ConfigurationBuilders
 {
     internal class ColumnConfigurationBuilder : IColumnConfigurationBuilder
     {
-        public NonIdentityColumnConfiguration BuildColumnConfiguration<T>(T value, ColumnSettings<T> columnSettings)
+        public NonIdentityColumnConfiguration BuildColumnConfiguration<T>(T value, ColumnConfigurationSettings<T> columnConfigurationSettings)
         {
-            return new SimpleValueColumnConfiguration(value, typeof (T), columnSettings.Ordinal, columnSettings.ColumnName, columnSettings.NullReplacement);
+            return new SimpleValueColumnConfiguration(value, typeof (T), columnConfigurationSettings.Ordinal, columnConfigurationSettings.ColumnName, columnConfigurationSettings.NullReplacement);
         }
 
-        public NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings)
+        public NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnConfigurationSettings<K> columnConfigurationSettings)
         {
             if (func.Body.NodeType == ExpressionType.MemberAccess)
             {
                 var memberInfo = ReflectionHelper.GetMemberInfoFromLambda(func);
                 var fullPropertyPath = ReflectionHelper.GetMemberRelativePathNameFromLambda(func);
-                return new MemberColumnConfiguration(memberInfo, columnSettings.Ordinal, columnSettings.ColumnName, columnSettings.NullReplacement, fullPropertyPath);
+                return new MemberColumnConfiguration(memberInfo, columnConfigurationSettings.Ordinal, columnConfigurationSettings.ColumnName, columnConfigurationSettings.NullReplacement, fullPropertyPath);
             }
 
             var delegateSettings = new DelegateSettings(func.Compile());
-            return new DelegateColumnConfiguration(delegateSettings, columnSettings.Ordinal, columnSettings.ColumnName, columnSettings.NullReplacement);
+            return new DelegateColumnConfiguration(delegateSettings, columnConfigurationSettings.Ordinal, columnConfigurationSettings.ColumnName, columnConfigurationSettings.NullReplacement);
         }
 
         public NonIdentityColumnConfiguration BuildColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new()

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TableTranslator.Abstract;
 
 namespace TableTranslator.Model
@@ -50,19 +49,6 @@ namespace TableTranslator.Model
         public TranslationUniqueIdentifier DeepClone()
         {
             return ShallowClone();
-        }
-    }
-
-    internal class TranslationUniqueIdentifierComparer : IEqualityComparer<TranslationUniqueIdentifier>
-    {
-        public bool Equals(TranslationUniqueIdentifier x, TranslationUniqueIdentifier y)
-        {
-            return x.ToString() == y.ToString();
-        }
-
-        public int GetHashCode(TranslationUniqueIdentifier obj)
-        {
-            return obj.ToString().GetHashCode();
         }
     }
 }

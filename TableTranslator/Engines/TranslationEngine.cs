@@ -6,7 +6,7 @@ using TableTranslator.Model.ColumnConfigurations;
 
 namespace TableTranslator.Engines
 {
-    public abstract class TranslationEngine
+    internal abstract class TranslationEngine
     {
         internal string Name => this.GetType().Name;
 

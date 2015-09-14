@@ -6,10 +6,10 @@ using TableTranslator.Model.Settings;
 
 namespace TableTranslator.Abstract
 {
-    public interface IColumnConfigurationBuilder
+    internal interface IColumnConfigurationBuilder
     {
-        NonIdentityColumnConfiguration BuildColumnConfiguration<T>(T value, ColumnSettings<T> columnSettings);
-        NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnSettings<K> columnSettings);
+        NonIdentityColumnConfiguration BuildColumnConfiguration<T>(T value, ColumnConfigurationSettings<T> columnConfigurationSettings);
+        NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnConfigurationSettings<K> columnConfigurationSettings);
         NonIdentityColumnConfiguration BuildColumnConfiguration<T>(MemberInfo memberInfo, int ordinal) where T : new();
     }
 }

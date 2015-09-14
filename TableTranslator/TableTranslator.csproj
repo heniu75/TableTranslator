@@ -69,9 +69,10 @@
     <Compile Include="Model\ColumnConfigurations\NonIdentityColumnConfiguration.cs" />
     <Compile Include="Abstract\IColumnConfigurationBuilder.cs" />
     <Compile Include="Model\Settings\GetAllMemberSettings.cs" />
-    <Compile Include="Model\Settings\ColumnSettings.cs" />
+    <Compile Include="Model\Settings\ColumnConfigurationSettings.cs" />
     <Compile Include="Model\Settings\TranslationSettings.cs" />
     <Compile Include="Model\TranslationBase.cs" />
+    <Compile Include="Model\TranslationUniqueIdentifierComparer.cs" />
     <Compile Include="Stores\TranslationStore.cs" />
     <Compile Include="Model\ColumnConfigurations\DelegateColumnConfiguration.cs" />
     <Compile Include="Model\Settings\DelegateSettings.cs" />

@@ -18,9 +18,9 @@ namespace TableTranslator.Test.TestModel.Profiles
                 .AddColumnConfiguration(x => x.TData);
 
             AddTranslation<Generics.ThreeGenerics<int, DateTime, string>>(new TranslationSettings("IntDateTimeStringGeneric"))
-                .AddColumnConfiguration(x => x.TData, new ColumnSettings<int> { ColumnName = "T Data" })
-                .AddColumnConfiguration(x => x.KData, new ColumnSettings<DateTime> { ColumnName = "K Data" })
-                .AddColumnConfiguration(x => x.JData, new ColumnSettings<string> { ColumnName = "J Data" });
+                .AddColumnConfiguration(x => x.TData, new ColumnConfigurationSettings<int> { ColumnName = "T Data" })
+                .AddColumnConfiguration(x => x.KData, new ColumnConfigurationSettings<DateTime> { ColumnName = "K Data" })
+                .AddColumnConfiguration(x => x.JData, new ColumnConfigurationSettings<string> { ColumnName = "J Data" });
 
             AddTranslation<Generics.OneGeneric<Generics.OneGeneric<bool>>>(new TranslationSettings("NestedGeneric"))
                 .AddColumnConfiguration(x => x.TData.TData);

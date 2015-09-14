@@ -9,7 +9,11 @@ using TableTranslator.Model.Settings;
 
 namespace TableTranslator
 {
-    public sealed class TranslationExpression<T> where T : new()
+    /// <summary>
+    /// Expression generator used to add column configurations to a translation
+    /// </summary>
+    /// <typeparam name="TTranslationDataType">Data type that the translation is for</typeparam>
+    public sealed class TranslationExpression<TTranslationDataType> where TTranslationDataType : new()
     {
         private readonly Translation Translation;
         private readonly IColumnConfigurationBuilder _colConfigBuilder = new ColumnConfigurationBuilder();
@@ -30,73 +34,73 @@ namespace TableTranslator
         /// <summary>
         /// Adds a column configuration to a translation
         /// </summary>
-        /// <typeparam name="K">Data type for the column</typeparam>
+        /// <typeparam name="KColumnDataType">Data type for the column</typeparam>
         /// <param name="value">Value for the column</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddColumnConfiguration<K>(K value)
+        public TranslationExpression<TTranslationDataType> AddColumnConfiguration<KColumnDataType>(KColumnDataType value)
         {
-            return AddColumnConfiguration(value, new ColumnSettings<K>());
+            return AddColumnConfiguration(value, new ColumnConfigurationSettings<KColumnDataType>());
         }
 
         /// <summary>
         /// Adds a column configuration to a translation
         /// </summary>
-        /// <typeparam name="K">>Data type for the column</typeparam>
+        /// <typeparam name="KColumnDataType">>Data type for the column</typeparam>
         /// <param name="value">Value for the column</param>
-        /// <param name="settings">Additional configuration settings for the column</param>
+        /// <param name="configurationSettings">Additional configuration settings for the column</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddColumnConfiguration<K>(K value, ColumnSettings<K> settings)
+        public TranslationExpression<TTranslationDataType> AddColumnConfiguration<KColumnDataType>(KColumnDataType value, ColumnConfigurationSettings<KColumnDataType> configurationSettings)
         {
-            settings.Ordinal = this.NextOrdinal;
-            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(value, settings));
+            configurationSettings.Ordinal = this.NextOrdinal;
+            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(value, configurationSettings));
             return this;
         }
 
         /// <summary>
         /// Adds a column configuration to a translation
         /// </summary>
-        /// <typeparam name="K">Data type for the column</typeparam>
+        /// <typeparam name="KColumnDataType">Data type for the column</typeparam>
         /// <param name="func">Expression that will be evaluated to get the value for the column</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddColumnConfiguration<K>(Expression<Func<T, K>> func)
+        public TranslationExpression<TTranslationDataType> AddColumnConfiguration<KColumnDataType>(Expression<Func<TTranslationDataType, KColumnDataType>> func)
         {
-            return AddColumnConfiguration(func, new ColumnSettings<K>());
+            return AddColumnConfiguration(func, new ColumnConfigurationSettings<KColumnDataType>());
         }
 
         /// <summary>
         /// Adds a column configuration to a translation
         /// </summary>
-        /// <typeparam name="K">>Data type for the column</typeparam>
+        /// <typeparam name="KColumnDataType">>Data type for the column</typeparam>
         /// <param name="func">Expression that will be evaluated to get the value for the column</param>
-        /// <param name="settings">Additional configuration settings for the column</param>
+        /// <param name="configurationSettings">Additional configuration settings for the column</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddColumnConfiguration<K>(Expression<Func<T, K>> func, ColumnSettings<K> settings)
+        public TranslationExpression<TTranslationDataType> AddColumnConfiguration<KColumnDataType>(Expression<Func<TTranslationDataType, KColumnDataType>> func, ColumnConfigurationSettings<KColumnDataType> configurationSettings)
         {
-            settings.Ordinal = this.NextOrdinal;
-            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(func, settings));
+            configurationSettings.Ordinal = this.NextOrdinal;
+            AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration(func, configurationSettings));
             return this;
         }
 
         /// <summary>
-        /// Adds a column configuration for all members of T to a translation 
+        /// Adds a column configuration for all members of TTranslationType to a translation 
         /// </summary>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddColumnConfigurationForAllMembers()
+        public TranslationExpression<TTranslationDataType> AddColumnConfigurationForAllMembers()
         {
             return AddColumnConfigurationForAllMembers(new GetAllMemberSettings());
         }
 
         /// <summary>
-        /// Adds a column configuration for all members of T to a translation 
+        /// Adds a column configuration for all members of TTranslationType to a translation 
         /// </summary>
         /// <param name="settings">Additional settings for determining which members to include</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddColumnConfigurationForAllMembers(GetAllMemberSettings settings)
+        public TranslationExpression<TTranslationDataType> AddColumnConfigurationForAllMembers(GetAllMemberSettings settings)
         {
-            var members = ReflectionHelper.GetAllMembers<T>(settings ?? new GetAllMemberSettings());
+            var members = ReflectionHelper.GetAllMembers<TTranslationDataType>(settings ?? new GetAllMemberSettings());
             foreach (var mi in members)
             {
-                AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration<T>(mi, this.NextOrdinal));
+                AddExplicitColumnConfiguration(this._colConfigBuilder.BuildColumnConfiguration<TTranslationDataType>(mi, this.NextOrdinal));
             }
             return this;
         }
@@ -106,7 +110,7 @@ namespace TableTranslator
         /// </summary>
         /// <param name="config">Explicit configuration of a non identity column to be added to a translation</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<T> AddExplicitColumnConfiguration(NonIdentityColumnConfiguration config)
+        public TranslationExpression<TTranslationDataType> AddExplicitColumnConfiguration(NonIdentityColumnConfiguration config)
         {
             if (config == null)
             {

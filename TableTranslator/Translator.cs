@@ -64,10 +64,10 @@ namespace TableTranslator
         /// <summary>
         /// Adds a profile to the translator
         /// </summary>
-        /// <typeparam name="T">Profile to add</typeparam>
-        public static void AddProfile<T>() where T : TranslationProfile, new()
+        /// <typeparam name="TProfile">Profile to add</typeparam>
+        public static void AddProfile<TProfile>() where TProfile : TranslationProfile, new()
         {
-            _store.AddProfile(new T());
+            _store.AddProfile(new TProfile());
         }
 
         /// <summary>
@@ -134,10 +134,10 @@ namespace TableTranslator
         /// <summary>
         /// Removes a profile from the translator
         /// </summary>
-        /// <typeparam name="T">Profle to remove</typeparam>
-        public static void RemoveProfile<T>() where T : TranslationProfile, new()
+        /// <typeparam name="TProfile">Profle to remove</typeparam>
+        public static void RemoveProfile<TProfile>() where TProfile : TranslationProfile, new()
         {
-            _store.RemoveProfile(new T().ProfileName);
+            _store.RemoveProfile(new TProfile().ProfileName);
         }
 
         /// <summary>
@@ -203,34 +203,34 @@ namespace TableTranslator
         /// <summary>
         /// Gets all translations in the translator for a given profile
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
         /// <returns>The translations in the translator for the profile provided</returns>
-        public static IEnumerable<TranslationBase> GetProfileTranslations<T>() where T : TranslationProfile, new()
+        public static IEnumerable<TranslationBase> GetProfileTranslations<TProfile>() where TProfile : TranslationProfile, new()
         {
-            return _store.GetProfileTranslations<T>();
+            return _store.GetProfileTranslations<TProfile>();
         }
 
         /// <summary>
         /// Gets all translations in the translator for a specific type for a given profile
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
-        /// <typeparam name="K">Type the translation is for</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
+        /// <typeparam name="KTranslationType">Type the translation is for</typeparam>
         /// <returns>The translations in the translator for the given type in the profile provided</returns>
-        public static IEnumerable<TranslationBase> GetProfileTranslationsForType<T, K>() where T : TranslationProfile, new()
+        public static IEnumerable<TranslationBase> GetProfileTranslationsForType<TProfile, KTranslationType>() where TProfile : TranslationProfile, new()
         {
-            return _store.GetProfileTranslationsForType<T, K, Translation>();
+            return _store.GetProfileTranslationsForType<TProfile, KTranslationType, Translation>();
         }
 
         /// <summary>
         /// Gets all translations in the translator for a specific type for a given profile that has a specific name
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
-        /// <typeparam name="K">Type the translation is for</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
+        /// <typeparam name="KTranslationType">Type the translation is for</typeparam>
         /// <param name="translationName">Name of the translation</param>
         /// <returns>The translations in the translator for the given type in the profile provided that matches the name provided</returns>
-        public static TranslationBase GetProfileTranslation<T, K>(string translationName) where T : TranslationProfile, new()
+        public static TranslationBase GetProfileTranslation<TProfile, KTranslationType>(string translationName) where TProfile : TranslationProfile, new()
         {
-            return _store.GetProfileTranslation<T, K, Translation>(translationName);
+            return _store.GetProfileTranslation<TProfile, KTranslationType, Translation>(translationName);
         }
 
         #endregion
@@ -240,66 +240,66 @@ namespace TableTranslator
         /// <summary>
         /// Translates a list of objects to data table
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
-        /// <typeparam name="K">Type of object to translate</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
+        /// <typeparam name="KTranslationDataType">Type of object to translate</typeparam>
         /// <param name="source">The data to translate to a data table</param>
         /// <returns>Translated data table</returns>
-        public static DataTable Translate<T, K>(IEnumerable<K> source) 
-            where T : TranslationProfile, new()
-            where K : new()
+        public static DataTable Translate<TProfile, KTranslationDataType>(IEnumerable<KTranslationDataType> source) 
+            where TProfile : TranslationProfile, new()
+            where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
+            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
         }
 
         /// <summary>
         /// Translates a list of objects to data table
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
-        /// <typeparam name="K">Type of object to translate</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
+        /// <typeparam name="KTranslationDataType">Type of object to translate</typeparam>
         /// <param name="source">The data to translate to a data table</param>
         /// <param name="translationName">Name of the translation to use (must be specified if more than one translation is in the provided profile for the given type)</param>
         /// <returns>Translated data table</returns>
-        public static DataTable Translate<T, K>(IEnumerable<K> source, string translationName)
-            where T : TranslationProfile, new()
-            where K : new()
+        public static DataTable Translate<TProfile, KTranslationDataType>(IEnumerable<KTranslationDataType> source, string translationName)
+            where TProfile : TranslationProfile, new()
+            where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
+            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
         }
 
         /// <summary>
         /// Translates a list of objects to a database parameter
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
-        /// <typeparam name="K">Type of object to translate</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
+        /// <typeparam name="KTranslationDataType">Type of object to translate</typeparam>
         /// <param name="source">The data to translate to a data table</param>
         /// <param name="dbParameterSettings">Additional settings for generating the database parameter</param>
         /// <returns>Translated database parameter</returns>
-        public static DbParameter TranslateToDbParameter<T, K>(IEnumerable<K> source, DbParameterSettings dbParameterSettings)
-            where T : TranslationProfile, new()
-            where K : new()
+        public static DbParameter TranslateToDbParameter<TProfile, KTranslationDataType>(IEnumerable<KTranslationDataType> source, DbParameterSettings dbParameterSettings)
+            where TProfile : TranslationProfile, new()
+            where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            var table = _engines.Single(x => x.GetType() == typeof(DbParameterTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(), source);
+            var table = _engines.Single(x => x.GetType() == typeof(DbParameterTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
             return WrapinDbParameter(table, dbParameterSettings);
         }
 
         /// <summary>
         /// Translates a list of objects to a database parameter
         /// </summary>
-        /// <typeparam name="T">Type of a translation profile</typeparam>
-        /// <typeparam name="K">Type of object to translate</typeparam>
+        /// <typeparam name="TProfile">Type of a translation profile</typeparam>
+        /// <typeparam name="KTranslationDataType">Type of object to translate</typeparam>
         /// <param name="source">The data to translate to a data table</param>
         /// <param name="dbParameterSettings">Additional settings for generating the database parameter</param>
         /// <param name="translationName">Name of the translation to use (must be specified if more than one translation is in the provided profile for the given type)</param>
         /// <returns></returns>
-        public static DbParameter TranslateToDbParameter<T, K>(IEnumerable<K> source, DbParameterSettings dbParameterSettings, string translationName)
-            where T : TranslationProfile, new()
-            where K : new()
+        public static DbParameter TranslateToDbParameter<TProfile, KTranslationDataType>(IEnumerable<KTranslationDataType> source, DbParameterSettings dbParameterSettings, string translationName)
+            where TProfile : TranslationProfile, new()
+            where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            var table = _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<T, K>(translationName), source);
+            var table = _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
             return WrapinDbParameter(table, dbParameterSettings);
         }
 

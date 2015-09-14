@@ -23,7 +23,7 @@ namespace TableTranslator.Test.DelegateSettings_Test
         [Test]
         public void Output_type_same_as_delegate_return_type()
         {
-            Assert.AreEqual(typeof(string), this._delegateSettings.OutputType);
+            Assert.AreEqual(typeof(string), this._delegateSettings.ReturnType);
         }
     }
 }

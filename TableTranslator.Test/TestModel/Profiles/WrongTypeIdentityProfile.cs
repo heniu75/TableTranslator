@@ -10,7 +10,7 @@ namespace TableTranslator.Test.TestModel.Profiles
         protected override void Configure()
         {
             AddTranslation<int>(new TranslationSettings(new WrongTypeIdentity(), "WrongTypeIdentity"))
-                .AddColumnConfiguration(x => x * 10, new ColumnSettings<int> { ColumnName = "Times10" });
+                .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
         }
 
         public class WrongTypeIdentity : ProviderIdentityColumnConfiguration

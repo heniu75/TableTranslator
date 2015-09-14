@@ -26,7 +26,7 @@ namespace TableTranslator.Model.ColumnConfigurations
         }
 
         public override string ColumnName => !string.IsNullOrEmpty(this._columnName) ? this._columnName : base.OrdinalColumnName;
-        public override Type OutputType => this.DelegateSettings.OutputType;
+        public override Type OutputType => this.DelegateSettings.ReturnType;
 
         public override object GetValueFromObject(object obj)
         {
@@ -41,7 +41,7 @@ namespace TableTranslator.Model.ColumnConfigurations
                 throw new ArgumentNullException("delegateSettings");
             }
 
-            if (this.NullReplacement != null && this.NullReplacement != DBNull.Value && this.DelegateSettings.OutputType != base.NullReplacement.GetType())
+            if (this.NullReplacement != null && this.NullReplacement != DBNull.Value && this.DelegateSettings.ReturnType != base.NullReplacement.GetType())
             {
                 throw new TableTranslatorConfigurationException("Null replacement for delegate must be either of the same type as the delegate's return type, null, or DBNull.");
             }

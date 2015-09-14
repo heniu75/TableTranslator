@@ -52,7 +52,9 @@ namespace TableTranslator.Stores
 
         private void ClearProfilesAndTranslations(bool fullReset)
         {
+            // this will cascade and remove the initialized profile's corresponding initialized translations
             this._initializedProfiles.Clear();
+
             this._translations.Clear();
             this._profiles.RemoveAll((s, p) => fullReset || p.TranslationProfileState == TranslationProfileState.RemovalPending);
         }

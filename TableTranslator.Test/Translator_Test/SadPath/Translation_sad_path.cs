@@ -99,7 +99,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
             {
                 AddTranslation<TestPerson>(new TranslationSettings("Member"))
                     .AddColumnConfiguration(p => p.PublicProperty)
-                    .AddColumnConfiguration(p => p.InternalProperty, new ColumnSettings<string> {ColumnName = "PublicProperty"});
+                    .AddColumnConfiguration(p => p.InternalProperty, new ColumnConfigurationSettings<string> {ColumnName = "PublicProperty"});
             }
         }
 
@@ -109,7 +109,7 @@ namespace TableTranslator.Test.Translator_Test.SadPath
             {
                 AddTranslation<TestPerson>(new TranslationSettings("NonMember"))
                     .AddColumnConfiguration(12)
-                    .AddColumnConfiguration(p => p.InternalProperty, new ColumnSettings<string> { ColumnName = "Column0" });
+                    .AddColumnConfiguration(p => p.InternalProperty, new ColumnConfigurationSettings<string> { ColumnName = "Column0" });
             }
         }
     }

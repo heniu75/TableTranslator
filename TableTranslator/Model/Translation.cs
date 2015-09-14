@@ -12,7 +12,7 @@ namespace TableTranslator.Model
 {
     public sealed class Translation : TranslationBase, ICloneable<Translation>
     {
-        public Translation(Type type, TranslationProfile translationProfile, TranslationSettings translationSettings)
+        internal Translation(Type type, TranslationProfile translationProfile, TranslationSettings translationSettings)
             : base(type, translationProfile, translationSettings)
         {
         }
@@ -34,6 +34,10 @@ namespace TableTranslator.Model
             this.ColumnConfigurations.Add(config);
         }
 
+        /// <summary>
+        /// Gets the column configurations defined in the translation
+        /// </summary>
+        /// <returns>A read-only list of the column configurations defined in the translation</returns>
         public ReadOnlyCollection<NonIdentityColumnConfiguration> GetColumnConfigurations()
         {
             return this.ColumnConfigurations.AsReadOnly();

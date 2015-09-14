@@ -12,12 +12,20 @@ namespace TableTranslator.Model
     {
         internal readonly TypeInfo TypeInfo;
         internal TranslationUniqueIdentifier TranslationUniqueIdentifier { get; set; }
-        public TranslationProfile TranslationProfile { get; internal set; }
-        public TranslationSettings TranslationSettings { get; internal set; }
         internal List<NonIdentityColumnConfiguration> ColumnConfigurations { get; set; }
         internal List<Type> TraversedGenericArguments { get; set; }
 
-        protected TranslationBase(Type type, TranslationProfile translationProfile, TranslationSettings translationSettings)
+        /// <summary>
+        /// The profile that the translation belongs to
+        /// </summary>
+        public TranslationProfile TranslationProfile { get; internal set; }
+
+        /// <summary>
+        /// Additional settings that help define the translation
+        /// </summary>
+        public TranslationSettings TranslationSettings { get; internal set; }
+
+        protected internal TranslationBase(Type type, TranslationProfile translationProfile, TranslationSettings translationSettings)
         {
             if (string.IsNullOrEmpty(translationSettings.TranslationName))
             {
@@ -32,7 +40,7 @@ namespace TableTranslator.Model
             this.TranslationUniqueIdentifier = TranslationUniqueIdentifier.GetInstance(this);
         }
 
-        protected TranslationBase()
+        protected internal TranslationBase()
         {
 
         }
