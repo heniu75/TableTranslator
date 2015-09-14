@@ -5,9 +5,15 @@ using TableTranslator.Model;
 
 namespace TableTranslator.Exceptions
 {
+    /// <summary>
+    /// Exception pertaining to the configuration of the table translator
+    /// </summary>
     [Serializable]
     public class TableTranslatorConfigurationException : Exception
     {
+        /// <summary>
+        /// Profile involved in the exception
+        /// </summary>
         public TranslationProfile TranslationProfile { get; internal set; }
 
         internal TableTranslatorConfigurationException()

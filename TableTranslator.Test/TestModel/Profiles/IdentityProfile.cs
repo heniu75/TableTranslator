@@ -8,22 +8,22 @@ namespace TableTranslator.Test.TestModel.Profiles
     {
         protected override void Configure()
         {
-            AddTranslation<int>(new TranslationSettings(new SeededIdentityColumnConfiguration(), "SeededBasic"))
+            AddTranslation<int>(new TranslationSettings(new LongSeededIdentityColumnConfiguration(), "SeededBasic"))
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
 
-            AddTranslation<int>(new TranslationSettings(new SeededIdentityColumnConfiguration(10), "SeededStartingAt10"))
+            AddTranslation<int>(new TranslationSettings(new LongSeededIdentityColumnConfiguration(10), "SeededStartingAt10"))
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
 
-            AddTranslation<int>(new TranslationSettings(new SeededIdentityColumnConfiguration(0), "SeededStartingAt0"))
+            AddTranslation<int>(new TranslationSettings(new LongSeededIdentityColumnConfiguration(0), "SeededStartingAt0"))
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
 
-            AddTranslation<int>(new TranslationSettings(new SeededIdentityColumnConfiguration(identityIncrement: 5), "SeededIncrementOf5"))
+            AddTranslation<int>(new TranslationSettings(new LongSeededIdentityColumnConfiguration(identityIncrement: 5), "SeededIncrementOf5"))
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
 
-            AddTranslation<int>(new TranslationSettings(new SeededIdentityColumnConfiguration(10, 5), "SeededStartingAt10AndIncrementOf5"))
+            AddTranslation<int>(new TranslationSettings(new LongSeededIdentityColumnConfiguration(10, 5), "SeededStartingAt10AndIncrementOf5"))
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
 
-            AddTranslation<int>(new TranslationSettings(new SeededIdentityColumnConfiguration(-10, -5), "SeededStartingAtNeg10AndIncrementOfNeg5"))
+            AddTranslation<int>(new TranslationSettings(new LongSeededIdentityColumnConfiguration(-10, -5), "SeededStartingAtNeg10AndIncrementOfNeg5"))
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> { ColumnName = "Times10" });
 
             AddTranslation<int>(new TranslationSettings(new GuidIdentityColumnConfiguration("MyGuidId"), "GuidColumnNameProvided"))

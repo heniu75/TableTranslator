@@ -64,7 +64,7 @@ namespace TableTranslator.Engines
                 var previousValue = rowCount > 0
                     ? table.Rows[table.Rows.Count - 1][columnName]
                     : null;
-                args.Row[columnName] = translation.TranslationSettings.IdentityColumnConfiguration.GetValue(previousValue);
+                args.Row[columnName] = translation.TranslationSettings.IdentityColumnConfiguration.GetNextValue(previousValue);
             };
         }
 

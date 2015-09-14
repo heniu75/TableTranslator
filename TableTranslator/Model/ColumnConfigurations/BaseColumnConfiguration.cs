@@ -12,6 +12,11 @@ namespace TableTranslator.Model.ColumnConfigurations
         public int Ordinal { get; internal set; }
 
         /// <summary>
+        /// Name of the column
+        /// </summary>
+        public abstract string ColumnName { get; }
+
+        /// <summary>
         /// Data type of the column
         /// </summary>
         public abstract Type ColumnDataType { get; }

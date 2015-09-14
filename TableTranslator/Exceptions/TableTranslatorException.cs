@@ -4,6 +4,9 @@ using System.Security.Permissions;
 
 namespace TableTranslator.Exceptions
 {
+    /// <summary>
+    /// Exception pertaining to processing within the table translator
+    /// </summary>
     [Serializable]
     public class TableTranslatorException : Exception
     {

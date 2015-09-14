@@ -14,11 +14,6 @@ namespace TableTranslator.Model.ColumnConfigurations
         /// </summary>
         public object NullReplacement { get; private set; }
 
-        /// <summary>
-        /// Name of the column
-        /// </summary>
-        public abstract string ColumnName { get; }
-
         internal abstract object GetValueFromObject(object obj);
         internal abstract void ValidateInput();
 

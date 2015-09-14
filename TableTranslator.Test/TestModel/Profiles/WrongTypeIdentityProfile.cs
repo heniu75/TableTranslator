@@ -19,7 +19,7 @@ namespace TableTranslator.Test.TestModel.Profiles
             {
             }
 
-            protected override object GetValue(object previousValue)
+            protected override object GetNextValue(object previousValue)
             {
                 return Guid.NewGuid();
             }
