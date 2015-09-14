@@ -67,13 +67,6 @@ namespace TableTranslator.Test.Translator_Test.SadPath
         }
 
         [Test]
-        public void Duplicate_column_ordinal_throws_TableTranslatorConfigurationException()
-        {
-            Translator.AddProfile<DupeOrdinalProfile>();
-            Assert.Throws<TableTranslatorConfigurationException>(() => Translator.ApplyUpdates());
-        }
-
-        [Test]
         public void Explicit_column_name_matching_default_column_name_for_member_config_throws_TableTranslatorConfigurationException()
         {
             Translator.AddProfile<DupeExplicitMemberColumnNameProfile>();

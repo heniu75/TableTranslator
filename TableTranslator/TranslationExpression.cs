@@ -105,19 +105,13 @@ namespace TableTranslator
             return this;
         }
 
-        /// <summary>
-        /// Adds a column configuration to a translation using the most explicit level of detail (advanced, only use if AddColumnConfiguration() cannot)
-        /// </summary>
-        /// <param name="config">Explicit configuration of a non identity column to be added to a translation</param>
-        /// <returns>Translation expression used to add column configurations to a translation</returns>
-        public TranslationExpression<TTranslationDataType> AddExplicitColumnConfiguration(NonIdentityColumnConfiguration config)
+        private void AddExplicitColumnConfiguration(NonIdentityColumnConfiguration config)
         {
             if (config == null)
             {
                 throw new ArgumentNullException(nameof(config));
             }
             this.Translation.AddColumnConfiguration(config);
-            return this;
         }
     }
 }

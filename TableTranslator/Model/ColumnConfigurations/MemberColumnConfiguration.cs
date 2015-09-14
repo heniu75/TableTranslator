@@ -5,13 +5,14 @@ using TableTranslator.Helpers;
 
 namespace TableTranslator.Model.ColumnConfigurations
 {
-    public sealed class MemberColumnConfiguration : NonIdentityColumnConfiguration
+    internal sealed class MemberColumnConfiguration : NonIdentityColumnConfiguration
     {
         private string _relativePropertyPath;
         private string _columnName;
-        public MemberInfo MemberInfo { get; private set; }
+        private MemberInfo MemberInfo { get; set; }
+        private string RelativePropertyPath => !string.IsNullOrEmpty(this._relativePropertyPath) ? this._relativePropertyPath : this.MemberInfo.Name;
 
-        public MemberColumnConfiguration(MemberInfo memberInfo, int ordinal, string columnName, object nullReplacement,
+        internal MemberColumnConfiguration(MemberInfo memberInfo, int ordinal, string columnName, object nullReplacement,
             string relativePropertyPath) : base(ordinal, nullReplacement)
         {
             Initialize(memberInfo, columnName, relativePropertyPath);
@@ -32,13 +33,11 @@ namespace TableTranslator.Model.ColumnConfigurations
             ValidateInput();
         }
 
-        public string RelativePropertyPath => !string.IsNullOrEmpty(this._relativePropertyPath) ? this._relativePropertyPath : this.MemberInfo.Name;
-
         public override string ColumnName => !string.IsNullOrEmpty(this._columnName) ? this._columnName : this.MemberInfo.Name;
 
-        public override Type OutputType => this.MemberInfo.GetMemberType();
+        public override Type ColumnDataType => this.MemberInfo.GetMemberType();
 
-        public override object GetValueFromObject(object obj)
+        internal override object GetValueFromObject(object obj)
         {
             return ReflectionHelper.GetMemberValue(this.RelativePropertyPath, obj);
         }

@@ -24,11 +24,11 @@ namespace TableTranslator.Model.ColumnConfigurations.Identity
                     "The GetValue() method for identity column configurations cannot return null values");
             }
 
-            if (value.GetType() != this.DataType)
+            if (value.GetType() != this.ColumnDataType)
             {
                 throw new TableTranslatorConfigurationException(
                     "The return type of 'GetValue()' and the 'DataType' property must be of the same type for identity column configurations. " +
-                    $"Currently the return type of 'GetValue()' is '{value.GetType()}' and the type of the 'DataType' property is '{this.DataType}'");
+                    $"Currently the return type of 'GetValue()' is '{value.GetType()}' and the type of the 'DataType' property is '{this.ColumnDataType}'");
             }
         }
     }

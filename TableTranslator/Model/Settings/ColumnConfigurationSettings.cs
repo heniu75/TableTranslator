@@ -12,7 +12,7 @@ namespace TableTranslator.Model.Settings
         public string ColumnName { get; set; }
 
         /// <summary>
-        /// Replacement value to be used instead if provided value is null
+        /// Replacement value to be used if provided value is null
         /// </summary>
         public KColumnDataType NullReplacement { get; set; }
 

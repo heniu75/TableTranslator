@@ -18,9 +18,9 @@ namespace TableTranslator.Engines
         {
             return new DataColumn(
                 BuildFullColumnName(colConfig.ColumnName, translation),
-                colConfig.OutputType.GetPureType()) // will get the "underlying" type for nullable valye types (e.g. int?) if needed
+                colConfig.ColumnDataType.GetPureType()) // will get the "underlying" type for nullable valye types (e.g. int?) if needed
             {
-                AllowDBNull = colConfig.OutputType.IsNullAssignable()
+                AllowDBNull = colConfig.ColumnDataType.IsNullAssignable()
             };
         }
 

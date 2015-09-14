@@ -4,11 +4,25 @@ using TableTranslator.Exceptions;
 
 namespace TableTranslator.Model.ColumnConfigurations
 {
+    /// <summary>
+    /// Base class for non-identity column configurations
+    /// </summary>
     public abstract class NonIdentityColumnConfiguration : BaseColumnConfiguration, ICloneable<NonIdentityColumnConfiguration>
     {
+        /// <summary>
+        /// Replacement value to be used if provided value is null
+        /// </summary>
         public object NullReplacement { get; private set; }
 
-        protected NonIdentityColumnConfiguration(int ordinal, object nullReplacement)
+        /// <summary>
+        /// Name of the column
+        /// </summary>
+        public abstract string ColumnName { get; }
+
+        internal abstract object GetValueFromObject(object obj);
+        internal abstract void ValidateInput();
+
+        internal NonIdentityColumnConfiguration(int ordinal, object nullReplacement)
         {
             if (ordinal < 0)
             {
@@ -18,11 +32,6 @@ namespace TableTranslator.Model.ColumnConfigurations
             base.Ordinal = ordinal;
             this.NullReplacement = nullReplacement;
         }
-
-        public abstract string ColumnName { get; }
-        public abstract Type OutputType { get; }
-        public abstract object GetValueFromObject(object obj);
-        internal abstract void ValidateInput();
 
         public NonIdentityColumnConfiguration ShallowClone()
         {
