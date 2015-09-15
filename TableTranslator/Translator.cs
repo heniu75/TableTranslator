@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 using TableTranslator.Abstract;
 using TableTranslator.Engines;
@@ -23,13 +22,28 @@ namespace TableTranslator
         /// Determines if the translator has been initialized
         /// </summary>
         public static bool IsInitialized { get; private set; }
-        private static readonly ITranslationStore _store = new TranslationStore();
 
-        private static readonly List<TranslationEngine> _engines = new List<TranslationEngine>
+        private static readonly ITranslationStore _store = new TranslationStore();
+        private static readonly List<TranslationEngine> _engines = new List<TranslationEngine>();
+
+        /// <summary>
+        /// Static constructor for set up before users call Initialize()
+        /// </summary>
+        static Translator()
         {
-            new SimpleTranslationEngine(),
-            new DbParameterTranslationEngine()
-        };
+            AddEngine(new SimpleTranslationEngine());
+            AddEngine(new DbParameterTranslationEngine());
+        }
+
+        /// <summary>
+        /// Adds an engine to translator (private for now, but in the future we may allow users to create and add their own engines)
+        /// </summary>
+        /// <typeparam name="TEngine">Type of engine to add</typeparam>
+        /// <param name="engine">Engine to add</param>
+        private static void AddEngine<TEngine>(TEngine engine) where TEngine : TranslationEngine
+        {
+            _engines.Add(engine);
+        }
 
         /// <summary>
         /// Initializes the translator with the supplied translation profiles and runs each profile's Configure() method.
@@ -250,7 +264,7 @@ namespace TableTranslator
             where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
+            return _engines.GetEngine<SimpleTranslationEngine>().FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
         }
 
         /// <summary>
@@ -266,7 +280,7 @@ namespace TableTranslator
             where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            return _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
+            return _engines.GetEngine<SimpleTranslationEngine>().FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
         }
 
         /// <summary>
@@ -282,8 +296,8 @@ namespace TableTranslator
             where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            var table = _engines.Single(x => x.GetType() == typeof(DbParameterTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
-            return table.WrapinDbParameter(dbParameterSettings);
+            var engine = _engines.GetEngine<DbParameterTranslationEngine>();
+            return engine.WrapinDbParameter(engine.FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source), dbParameterSettings);
         }
 
         /// <summary>
@@ -300,8 +314,8 @@ namespace TableTranslator
             where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            var table = _engines.Single(x => x.GetType() == typeof(SimpleTranslationEngine)).FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
-            return table.WrapinDbParameter(dbParameterSettings);
+            var engine = _engines.GetEngine<DbParameterTranslationEngine>();
+            return engine.WrapinDbParameter(engine.FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source), dbParameterSettings);
         }
 
         #endregion

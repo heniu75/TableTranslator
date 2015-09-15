@@ -3,7 +3,7 @@ using System.Reflection;
 using TableTranslator.Exceptions;
 using TableTranslator.Helpers;
 
-namespace TableTranslator.Model.ColumnConfigurations
+namespace TableTranslator.Model.ColumnConfigurations.NonIdentity
 {
     internal sealed class MemberColumnConfiguration : NonIdentityColumnConfiguration
     {

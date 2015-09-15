@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using TableTranslator.Model;
-using TableTranslator.Model.Settings;
 using TableTranslator.Test.TestModel;
 using TableTranslator.Test.TestModel.Profiles;
 

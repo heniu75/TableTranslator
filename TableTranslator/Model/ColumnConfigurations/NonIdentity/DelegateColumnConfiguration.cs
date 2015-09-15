@@ -2,7 +2,7 @@ using System;
 using TableTranslator.Exceptions;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator.Model.ColumnConfigurations
+namespace TableTranslator.Model.ColumnConfigurations.NonIdentity
 {
     internal sealed class DelegateColumnConfiguration : NonIdentityColumnConfiguration
     {

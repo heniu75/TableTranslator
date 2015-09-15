@@ -1,7 +1,7 @@
 using System;
 using TableTranslator.Exceptions;
 
-namespace TableTranslator.Model.ColumnConfigurations
+namespace TableTranslator.Model.ColumnConfigurations.NonIdentity
 {
     internal sealed class SimpleValueColumnConfiguration : NonIdentityColumnConfiguration
     {

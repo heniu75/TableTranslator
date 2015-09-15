@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TableTranslator.Engines;
 
 namespace TableTranslator.Helpers
 {
@@ -20,6 +21,17 @@ namespace TableTranslator.Helpers
             {
                 dictionary.Remove(key);
             }
+        }
+
+        /// <summary>
+        /// Simple way to get a particular engine for a list of translation engines
+        /// </summary>
+        /// <typeparam name="TEngine">Type of engine you want</typeparam>
+        /// <param name="engines"></param>
+        /// <returns></returns>
+        internal static TEngine GetEngine<TEngine>(this IEnumerable<TranslationEngine> engines) where TEngine : TranslationEngine
+        {
+            return engines.FirstOrDefault(x => x.GetType() == typeof(TEngine)) as TEngine;
         }
     }
 }

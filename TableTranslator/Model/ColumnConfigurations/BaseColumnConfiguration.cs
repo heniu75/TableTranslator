@@ -1,4 +1,5 @@
 using System;
+
 namespace TableTranslator.Model.ColumnConfigurations
 {
     /// <summary>

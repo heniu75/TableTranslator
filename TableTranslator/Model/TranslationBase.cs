@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using TableTranslator.Helpers;
 using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.NonIdentity;
 using TableTranslator.Model.Settings;
 
 namespace TableTranslator.Model

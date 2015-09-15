@@ -4,7 +4,6 @@ using System.Reflection;
 using NUnit.Framework;
 using TableTranslator.Model;
 using TableTranslator.Model.Settings;
-using TableTranslator.Test.Translator_Test;
 
 namespace TableTranslator.Test.TranslationExpression_Test
 {

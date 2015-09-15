@@ -4,7 +4,7 @@ using TableTranslator.Abstract;
 using TableTranslator.ConfigurationBuilders;
 using TableTranslator.Helpers;
 using TableTranslator.Model;
-using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.NonIdentity;
 using TableTranslator.Model.Settings;
 
 namespace TableTranslator

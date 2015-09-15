@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using TableTranslator.Abstract;
 using TableTranslator.Helpers;
-using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.NonIdentity;
 using TableTranslator.Model.Settings;
 
 namespace TableTranslator.ConfigurationBuilders

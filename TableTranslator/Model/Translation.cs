@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using TableTranslator.Abstract;
 using TableTranslator.Exceptions;
-using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.NonIdentity;
 using TableTranslator.Model.Settings;
 
 namespace TableTranslator.Model

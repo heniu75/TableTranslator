@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using TableTranslator.Test.TestModel.Profiles;
-using TableTranslator.Test.Translator_Test;
 
 namespace TableTranslator.Test.TranslationProfile_Test
 {

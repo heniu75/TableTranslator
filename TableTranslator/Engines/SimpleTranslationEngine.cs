@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TableTranslator.Model;
-using TableTranslator.Model.ColumnConfigurations;
+using TableTranslator.Model.ColumnConfigurations.NonIdentity;
 
 namespace TableTranslator.Engines
 {

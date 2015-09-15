@@ -1,8 +1,7 @@
-using System;
 using TableTranslator.Abstract;
 using TableTranslator.Exceptions;
 
-namespace TableTranslator.Model.ColumnConfigurations
+namespace TableTranslator.Model.ColumnConfigurations.NonIdentity
 {
     /// <summary>
     /// Base class for non-identity column configurations
