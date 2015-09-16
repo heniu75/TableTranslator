@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TableTranslator")]
-[assembly: AssemblyDescription("A .NET library for flexibly and powerfully translating lists to and from data tables")]
+[assembly: AssemblyDescription("A .NET library to easily and customizably convert a list of data to a DataTable")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chris Knight Development LLC")]
 [assembly: AssemblyProduct("TableTranslator")]

@@ -11,17 +11,17 @@ namespace TableTranslator.Model.Settings
         /// <summary>
         /// Name of the translation as stored in the translator
         /// </summary>
-        public string TranslationName { get; internal set; }
+        public string TranslationName { get; set; }
 
         /// <summary>
         /// Prefix for all column names for all column configurations in the translation (overrides the translation profile level setting)
         /// </summary>
-        public string ColumnNamePrefix { get; private set; }
+        public string ColumnNamePrefix { get; set; }
 
         /// <summary>
         /// Suffix for all column names for all column configurations in the translation (overrides the translation profile level setting)
         /// </summary>
-        public string ColumnNameSuffix { get; private set; }
+        public string ColumnNameSuffix { get; set; }
 
         internal IdentityColumnConfiguration IdentityColumnConfiguration { get; set; }
 

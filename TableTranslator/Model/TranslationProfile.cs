@@ -48,7 +48,7 @@ namespace TableTranslator.Model
         /// </summary>
         /// <typeparam name="TTranslationType">Type that the translation is for</typeparam>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        protected internal TranslationExpression<TTranslationType> AddTranslation<TTranslationType>() where TTranslationType : new()
+        public TranslationExpression<TTranslationType> AddTranslation<TTranslationType>() where TTranslationType : new()
         {
             return AddTranslation<TTranslationType>(new TranslationSettings());
         }
@@ -59,7 +59,7 @@ namespace TableTranslator.Model
         /// <typeparam name="TTranslationType">Type that the translation is for</typeparam>
         /// <param name="translationSettings">Additional configuration settings for the translation</param>
         /// <returns>Translation expression used to add column configurations to a translation</returns>
-        protected internal TranslationExpression<TTranslationType> AddTranslation<TTranslationType>(TranslationSettings translationSettings) where TTranslationType : new()
+        public TranslationExpression<TTranslationType> AddTranslation<TTranslationType>(TranslationSettings translationSettings) where TTranslationType : new()
         {
             try
             {
