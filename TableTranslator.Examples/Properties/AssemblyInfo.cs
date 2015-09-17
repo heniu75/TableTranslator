@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TableTranslator")]
-[assembly: AssemblyDescription("A .NET library to easily and customizably convert a list of data to a DataTable")]
+[assembly: AssemblyTitle("TableTranslator.Examples")]
+[assembly: AssemblyDescription("TableTranslator examples")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chris Knight")]
-[assembly: AssemblyProduct("TableTranslator")]
+[assembly: AssemblyProduct("TableTranslator.Examples")]
 [assembly: AssemblyCopyright("Copyright © Chris Knight 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d4e3d2bf-9310-4c2e-8629-72992d371fae")]
+[assembly: Guid("93988e1e-b548-41b1-b0fd-059729bef746")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
