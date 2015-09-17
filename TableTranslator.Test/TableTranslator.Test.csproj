@@ -90,6 +90,7 @@
     <Compile Include="TestModel\TestPerson.cs" />
     <Compile Include="TestModel\Profiles\DefaultNameProfile.cs" />
     <Compile Include="TestModel\Profiles\EmptyNameProfile.cs" />
+    <Compile Include="TranslationExpression_Test\CreateColumnConfiguration.cs" />
     <Compile Include="TranslationExpression_Test\ForAllMembers.cs" />
     <Compile Include="TranslationProfile_Test\Default_values_and_initialization.cs" />
     <Compile Include="TestModel\Profiles\NullNameProfile.cs" />

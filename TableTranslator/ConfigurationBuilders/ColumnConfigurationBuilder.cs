@@ -12,7 +12,7 @@ namespace TableTranslator.ConfigurationBuilders
     {
         public NonIdentityColumnConfiguration BuildColumnConfiguration<T>(T value, ColumnConfigurationSettings<T> columnConfigurationSettings)
         {
-            return new SimpleValueColumnConfiguration(value, typeof (T), columnConfigurationSettings.Ordinal, columnConfigurationSettings.ColumnName, columnConfigurationSettings.NullReplacement);
+            return new SimpleValueColumnConfiguration(value, value?.GetType() ?? typeof(T), columnConfigurationSettings.Ordinal, columnConfigurationSettings.ColumnName, columnConfigurationSettings.NullReplacement);
         }
 
         public NonIdentityColumnConfiguration BuildColumnConfiguration<T, K>(Expression<Func<T, K>> func, ColumnConfigurationSettings<K> columnConfigurationSettings)
