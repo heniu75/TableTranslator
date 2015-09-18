@@ -1,22 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TableTranslator.Examples.Model;
 using TableTranslator.Model;
+using TableTranslator.Model.ColumnConfigurations.Identity;
 using TableTranslator.Model.Settings;
 
-namespace TableTranslator.Examples.Simple
+namespace TableTranslator.Examples
 {
     class ExampleProfile : TranslationProfile
     {
+        // Giving my profile an explicit name (this is optional, by default the profile will be name of the class)
+        public override string ProfileName => "MyProfile";
+
+
+        /// <summary>
+        /// Use Configure to add your translations. There can be as many translations as you want for as many types as you want.
+        /// </summary>
         protected override void Configure()
         {
-            AddTranslation<Person>(new TranslationSettings("Basic"))
+            AddTranslation<Person>(new TranslationSettings("Miscellaneous"))
                 // some members of Person
                 .AddColumnConfiguration(x => x.Name) 
                 .AddColumnConfiguration(x => x.Birthday)
                 .AddColumnConfiguration(x => x.IsMarried)
+                // static member of Person
                 .AddColumnConfiguration(x => Person.IsWarmBlooded)
                 // some members from Address that belongs to Person
                 .AddColumnConfiguration(x => x.Address.Street) 
@@ -34,50 +42,60 @@ namespace TableTranslator.Examples.Simple
                 .AddColumnConfiguration(8, new ColumnConfigurationSettings<int> { ColumnName = "OxygenAtomicNumber"});
 
 
-            AddTranslation<Person>(new TranslationSettings("BasicAllMembers"))
-                .AddColumnConfigurationForAllMembers();
+            AddTranslation<Person>(new TranslationSettings("AllMembers"))
+                // adds column configurations for all members using these BindingFlags (BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
+                .AddColumnConfigurationForAllMembers(); 
 
 
             AddTranslation<Person>(new TranslationSettings("AllMembersWithPredicate"))
-                .AddColumnConfigurationForAllMembers(new GetAllMemberSettings { Predicate = x => x.Name.Contains("r")});
+                // adds column configurations for all members whose names contains 'r'
+                .AddColumnConfigurationForAllMembers(new GetAllMemberSettings
+                {
+                    Predicate = x => x.Name.Contains("r")
+                });
 
 
             AddTranslation<Person>(new TranslationSettings("AllMembersWithOrderer"))
-                .AddColumnConfigurationForAllMembers(new GetAllMemberSettings { Orderer = new MemberNameLengthDescendingOrderer() });
+                // adds column configurations for all members and orders them according to the provided IComparer<MemberInfo> (MemberNameLengthDescendingOrderer in this example)
+                .AddColumnConfigurationForAllMembers(new GetAllMemberSettings
+                {
+                    Orderer = new MemberNameLengthDescendingOrderer()
+                });
 
 
             AddTranslation<Person>(new TranslationSettings("AllMembersWithBindingFlags"))
+                // adds column configurations for all members using custom BindingFlags (this is excluding static members)
                 .AddColumnConfigurationForAllMembers(new GetAllMemberSettings
                 {
                     BindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public
                 });
 
 
-            AddTranslation<int>(new TranslationSettings("Struct"))
+            AddTranslation<Person>(
+                new TranslationSettings(
+                    new GuidIdentityColumnConfiguration("MyGuidId"), // add an identity column configuration to the translation
+                    "VariousOptionalSettings", // translation name
+                    "PREFIX_", // prefix for all column names in the translation
+                    "_SUFFIX")) // suffix for all column names in the translation
+                .AddColumnConfiguration(x => x.Name,
+                    new ColumnConfigurationSettings<string>
+                    {
+                        ColumnName = "DifferentName", // column name
+                        NullReplacement = "I am NULL!" // if value is null, replace with this value
+                    });
+
+
+            AddTranslation<int>(new TranslationSettings("ForAStruct"))
                 .AddColumnConfiguration(x => x, new ColumnConfigurationSettings<int> {ColumnName = "X"})
                 .AddColumnConfiguration(x => x * 10, new ColumnConfigurationSettings<int> {ColumnName = "X Times 10"})
                 .AddColumnConfiguration(x => DateTime.Now.AddDays(x), new ColumnConfigurationSettings<DateTime> { ColumnName = "X Days From Now" });
         }
 
+
+
         static int Multiply(int x, int y)
         {
             return x * y;
-        }
-    }
-
-    class MemberNameLengthDescendingOrderer : IComparer<MemberInfo>
-    {
-        public int Compare(MemberInfo x, MemberInfo y)
-        {
-            if (x.Name.Length > y.Name.Length)
-            {
-                return -1;
-            }
-            if (x.Name.Length < y.Name.Length)
-            {
-                return 1;
-            }
-            return 0;
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using TableTranslator.Examples.Model;
-using TableTranslator.Examples.Simple;
+using TableTranslator.Model.Settings;
 
 namespace TableTranslator.Examples
 {
     class Program
     {
-        #region set up data
+        #region set up sample data
         static readonly List<Person> _people = new List<Person>
             {
                 new Person
@@ -36,30 +36,45 @@ namespace TableTranslator.Examples
 
         static void Main(string[] args)
         {
+            // add our example profile
             Translator.AddProfile<ExampleProfile>();
+
+            // initialize the translator
             Translator.Initialize();
 
-            // perform our translations
-            Console.WriteLine("Basic{0}", Environment.NewLine);
-            Translator.Translate<ExampleProfile, Person>(_people, "Basic").PrintToConsole();
+            // translate data using the various translations in our profile
+            PrintTranslationHeader("Miscellaneous");
+            Translator.Translate<ExampleProfile, Person>(_people, "Miscellaneous").PrintToConsole();
 
-            Console.WriteLine("BasicAllMembers{0}", Environment.NewLine);
-            Translator.Translate<ExampleProfile, Person>(_people, "BasicAllMembers").PrintToConsole();
+            PrintTranslationHeader("AllMembers");
+            Translator.Translate<ExampleProfile, Person>(_people, "AllMembers").PrintToConsole();
 
-            Console.WriteLine("AllMembersWithPredicate{0}", Environment.NewLine);
+            PrintTranslationHeader("AllMembersWithPredicate");
             Translator.Translate<ExampleProfile, Person>(_people, "AllMembersWithPredicate").PrintToConsole();
 
-            Console.WriteLine("AllMembersWithOrderer{0}", Environment.NewLine);
+            PrintTranslationHeader("AllMembersWithOrderer");
             Translator.Translate<ExampleProfile, Person>(_people, "AllMembersWithOrderer").PrintToConsole();
 
-            Console.WriteLine("AllMembersWithBindingFlags{0}", Environment.NewLine);
+            PrintTranslationHeader("AllMembersWithBindingFlags");
             Translator.Translate<ExampleProfile, Person>(_people, "AllMembersWithBindingFlags").PrintToConsole();
 
-            Console.WriteLine("Struct{0}", Environment.NewLine);
-            Translator.Translate<ExampleProfile, int>(new List<int> { 1,2,3 }, "Struct").PrintToConsole();
+            PrintTranslationHeader("VariousOptionalSettings");
+            Translator.Translate<ExampleProfile, Person>(_people, "VariousOptionalSettings").PrintToConsole();
 
+            PrintTranslationHeader("ForAStruct");
+            Translator.Translate<ExampleProfile, int>(new List<int> { 1, 2, 3 }, "ForAStruct").PrintToConsole();
+
+            // NOTE: The same translation can translate a list to a DataTable and/or DbParameter
+            PrintTranslationHeader("Miscellaneous (as a DbParameter)");
+            Translator.TranslateToDbParameter<ExampleProfile, Person>(_people,
+                new DbParameterSettings("myParameterName", "myDatabaseObjName"), "Miscellaneous").PrintToConsole();
 
             Console.ReadLine();
+        }
+
+        static void PrintTranslationHeader(string translationName)
+        {
+            Console.WriteLine("[{0}]{1}", translationName, Environment.NewLine);
         }
     }
 }
