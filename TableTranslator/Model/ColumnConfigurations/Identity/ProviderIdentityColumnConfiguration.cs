@@ -9,7 +9,7 @@ namespace TableTranslator.Model.ColumnConfigurations.Identity
     public abstract class ProviderIdentityColumnConfiguration : IdentityColumnConfiguration
     {
         /// <summary>
-        /// Creates an instance of LongSeededIdentityColumnConfiguration
+        /// Creates an instance of ProviderIdentityColumnConfiguration
         /// </summary>
         /// <param name="type">Data type for the identity column</param>
         protected ProviderIdentityColumnConfiguration(Type type) : base(type)
@@ -18,7 +18,7 @@ namespace TableTranslator.Model.ColumnConfigurations.Identity
         }
 
         /// <summary>
-        /// Creates an instance of LongSeededIdentityColumnConfiguration
+        /// Creates an instance of ProviderIdentityColumnConfiguration
         /// </summary>
         /// <param name="type">Data type for the identity column</param>
         /// <param name="columnName">Name of the identity column</param>
