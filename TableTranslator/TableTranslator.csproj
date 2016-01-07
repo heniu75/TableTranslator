@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Abstract\ICloneable.cs" />
     <Compile Include="Engines\DbParameterTranslationEngine.cs" />
+    <Compile Include="Model\AdhocProfile.cs" />
     <Compile Include="Model\ColumnConfigurations\BaseColumnConfiguration.cs" />
     <Compile Include="Model\ColumnConfigurations\Identity\SeededIdentityColumnConfiguration.cs" />
     <Compile Include="Model\ColumnConfigurations\Identity\IntSeededIdentityColumnConfiguration.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Model\Settings\TranslationSettings.cs" />
     <Compile Include="Model\TranslationBase.cs" />
     <Compile Include="Model\TranslationUniqueIdentifierComparer.cs" />
+    <Compile Include="Model\ObjectResult.cs" />
     <Compile Include="Stores\TranslationStore.cs" />
     <Compile Include="Model\ColumnConfigurations\NonIdentity\DelegateColumnConfiguration.cs" />
     <Compile Include="Model\Settings\DelegateSettings.cs" />
