@@ -15,7 +15,7 @@ namespace TableTranslator
     /// <typeparam name="TTranslationDataType">Data type that the translation is for</typeparam>
     public sealed class TranslationExpression<TTranslationDataType> where TTranslationDataType : new()
     {
-        private readonly Translation Translation;
+        internal Translation Translation { get; }
         private readonly IColumnConfigurationBuilder _colConfigBuilder = new ColumnConfigurationBuilder();
 
         private int _ordinal;

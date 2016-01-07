@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
+using TableTranslator.Helpers;
 using TableTranslator.Model;
 using TableTranslator.Model.ColumnConfigurations.NonIdentity;
 
@@ -35,7 +37,8 @@ namespace TableTranslator.Engines
             foreach (var x in data)
             {
                 /* ReSharper disable once CompareNonConstrainedGenericWithNull
-                I have Jon Skeet's express permission to ignore this warning :) (http://stackoverflow.com/questions/5340817/what-should-i-do-about-possible-compare-of-value-type-with-null) */
+                I have Jon Skeet's express permission to ignore this warning :) 
+                (http://stackoverflow.com/questions/5340817/what-should-i-do-about-possible-compare-of-value-type-with-null) */
                 if (x == null) continue;
 
                 var row = dataTable.NewRow();
@@ -47,6 +50,53 @@ namespace TableTranslator.Engines
             }
 
             return dataTable;
+        }
+
+        internal override IEnumerable<ObjectResult<T>> FillObjectResult<T>(InitializedTranslation translation, DataTable dataTable)
+        {
+            var result = new List<ObjectResult<T>>();
+
+            foreach (var row in dataTable.Rows.Cast<DataRow>())
+            {
+                var objectResult = new T();
+                var bag = new Dictionary<string, object>();
+
+                if (translation.TranslationSettings.IdentityColumnConfiguration != null)
+                {
+                    bag.Add(translation.TranslationSettings.IdentityColumnConfiguration.ColumnName,
+                        GetColumnValueFromRow<T>(row, translation.TranslationSettings.IdentityColumnConfiguration.ColumnName));
+                }
+
+                foreach (var cc in translation.ColumnConfigurations)
+                {
+                    if (cc is MemberColumnConfiguration)
+                    {
+                        PropertyInfo prop = typeof(T).GetProperty((cc as MemberColumnConfiguration).MemberInfo.Name);
+                        if (prop != null && prop.CanWrite)
+                        {
+                            prop.SetValue(objectResult, GetColumnValueFromRow<T>(row, cc.ColumnName));
+                            continue;
+                        }
+
+                        FieldInfo field = typeof(T).GetField((cc as MemberColumnConfiguration).MemberInfo.Name);
+                        if (!field.IsInitOnly)
+                        {
+                            field.SetValue(objectResult, GetColumnValueFromRow<T>(row, cc.ColumnName));
+                            continue;
+                        }
+                    }
+
+                    bag.Add(cc.ColumnName, GetColumnValueFromRow<T>(row, cc.ColumnName));
+                }
+
+                result.Add(new ObjectResult<T>
+                {
+                    Object = objectResult,
+                    DataBag = bag
+                });
+            }
+
+            return result;
         }
 
         private static DataTableNewRowEventHandler AssignTableNewRowEvent(TranslationBase translation)

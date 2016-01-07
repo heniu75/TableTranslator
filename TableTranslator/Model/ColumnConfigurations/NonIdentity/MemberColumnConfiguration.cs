@@ -9,8 +9,8 @@ namespace TableTranslator.Model.ColumnConfigurations.NonIdentity
     {
         private string _relativePropertyPath;
         private string _columnName;
-        private MemberInfo MemberInfo { get; set; }
         private string RelativePropertyPath => !string.IsNullOrEmpty(this._relativePropertyPath) ? this._relativePropertyPath : this.MemberInfo.Name;
+        internal MemberInfo MemberInfo { get; private set; }
 
         internal MemberColumnConfiguration(MemberInfo memberInfo, int ordinal, string columnName, object nullReplacement,
             string relativePropertyPath) : base(ordinal, nullReplacement)

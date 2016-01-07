@@ -250,6 +250,69 @@ namespace TableTranslator
 
         #endregion
 
+        #region adhoc
+
+        /// <summary>
+        /// Create an adhoc translation (not contained in a TranslationProfile) for type TTranslationType
+        /// </summary>
+        /// <typeparam name="TTranslationType">Type that the translation is for</typeparam>
+        /// <returns>Translation expression used to add column configurations to a translation</returns>
+        public static TranslationExpression<TTranslationType> CreateAdhocTranslation<TTranslationType>()
+           where TTranslationType : new()
+        {
+            return CreateAdhocTranslation<TTranslationType>(new TranslationSettings());
+        }
+
+        /// <summary>
+        /// Create an adhoc translation (not contained in a TranslationProfile) for type TTranslationType
+        /// </summary>
+        /// <typeparam name="TTranslationType">Type that the translation is for</typeparam>
+        /// <param name="translationSettings">Additional configuration settings for the translation</param>
+        /// <returns>Translation expression used to add column configurations to a translation</returns>
+        public static TranslationExpression<TTranslationType> CreateAdhocTranslation<TTranslationType>(TranslationSettings translationSettings)
+            where TTranslationType : new()
+        {
+            var translation = new Translation(typeof(TTranslationType), new AdhocProfile(), translationSettings);
+            return new TranslationExpression<TTranslationType>(translation);
+        }
+
+        /// <summary>
+        /// Translates a list of objects to data table using an adhoc translation (not contained in a TranslationProfile)
+        /// </summary>
+        /// <typeparam name="KTranslationDataType">Type of object to translate</typeparam>
+        /// <param name="translationExpression">Translation expression to use in the translation</param>
+        /// <param name="source">The data to translate to a data table</param>
+        /// <returns>Translated data table</returns>
+        public static DataTable AdhocTranslate<KTranslationDataType>(TranslationExpression<KTranslationDataType> translationExpression,
+            IEnumerable<KTranslationDataType> source)
+            where KTranslationDataType : new()
+        {
+            var tmpEngine = new SimpleTranslationEngine();
+            var initialzedTranslation =
+                InitializedTranslation.CreateInstance(translationExpression.Translation, new List<TranslationEngine> { tmpEngine });
+            return tmpEngine.FillDataTable(initialzedTranslation, source);
+        }
+
+        /// <summary>
+        /// Translates a list of objects to a database parameter using an adhoc translation (not contained in a TranslationProfile)
+        /// </summary>
+        /// <typeparam name="KTranslationDataType">Type of object to translate</typeparam>
+        /// <param name="translationExpression">Translation expression to use in the translation</param>
+        /// <param name="source">The data to translate to a data table</param>
+        /// <param name="dbParameterSettings">Additional settings for generating the database parameter</param>
+        /// <returns>Translated database parameter</returns>
+        public static DbParameter AdhocTranslateToDbParameter<KTranslationDataType>(TranslationExpression<KTranslationDataType> translationExpression,
+            IEnumerable<KTranslationDataType> source, DbParameterSettings dbParameterSettings)
+            where KTranslationDataType : new()
+        {
+            var tmpEngine = new DbParameterTranslationEngine();
+            var initialzedTranslation =
+                InitializedTranslation.CreateInstance(translationExpression.Translation, new List<TranslationEngine> { tmpEngine });
+            return tmpEngine.WrapinDbParameter(tmpEngine.FillDataTable(initialzedTranslation, source), dbParameterSettings);
+        }
+
+        #endregion
+
         #region translators
 
         /// <summary>
@@ -264,7 +327,8 @@ namespace TableTranslator
             where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            return _engines.GetEngine<SimpleTranslationEngine>().FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
+            return _engines.GetEngine<SimpleTranslationEngine>().FillDataTable(
+                _store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
         }
 
         /// <summary>
@@ -280,8 +344,10 @@ namespace TableTranslator
             where KTranslationDataType : new()
         {
             PreTranslateValidation();
-            return _engines.GetEngine<SimpleTranslationEngine>().FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
+            return _engines.GetEngine<SimpleTranslationEngine>().FillDataTable(
+                _store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source);
         }
+
 
         /// <summary>
         /// Translates a list of objects to a database parameter
@@ -297,7 +363,8 @@ namespace TableTranslator
         {
             PreTranslateValidation();
             var engine = _engines.GetEngine<DbParameterTranslationEngine>();
-            return engine.WrapinDbParameter(engine.FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source), dbParameterSettings);
+            return engine.WrapinDbParameter(engine.FillDataTable(
+                _store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source), dbParameterSettings);
         }
 
         /// <summary>
@@ -315,8 +382,30 @@ namespace TableTranslator
         {
             PreTranslateValidation();
             var engine = _engines.GetEngine<DbParameterTranslationEngine>();
-            return engine.WrapinDbParameter(engine.FillDataTable(_store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source), dbParameterSettings);
+            return engine.WrapinDbParameter(engine.FillDataTable(
+                _store.SingleInitializedTranslation<TProfile, KTranslationDataType>(translationName), source), dbParameterSettings);
         }
+
+        #endregion
+
+        #region reverse translators
+
+        //public static IEnumerable<ObjectResult<KTranslationDataType>> ReverseTranslate<TProfile, KTranslationDataType>(DataTable source)
+        //    where TProfile : TranslationProfile, new()
+        //    where KTranslationDataType : new()
+        //{
+        //    PreTranslateValidation();
+        //    return _engines.GetEngine<SimpleTranslationEngine>().FillObjectResult<KTranslationDataType>(
+        //        _store.SingleInitializedTranslation<TProfile, KTranslationDataType>(), source);
+        //}
+
+        //public static IEnumerable<ObjectResult<KTranslationDataType>> ReverseTranslate<TProfile, KTranslationDataType>(DataTable source, string translationName)
+        //    where TProfile : TranslationProfile, new()
+        //    where KTranslationDataType : new()
+        //{
+        //    PreTranslateValidation();
+        //    return null;
+        //}
 
         #endregion
 

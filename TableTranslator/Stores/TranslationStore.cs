@@ -177,11 +177,13 @@ namespace TableTranslator.Stores
                 var translations = this.GetProfileTranslationsForType<T, K, InitializedTranslation>().ToList();
                 if (translations.Count() > 1)
                 {
-                    throw new TableTranslatorException(string.Format("More than one translation was found in translation profile '{0}' for type of '{1}'.", new T().ProfileName, typeof(K).FullName));
+                    throw new TableTranslatorException(
+                        $"More than one translation was found in translation profile '{new T().ProfileName}' for type of '{typeof (K).FullName}'.");
                 }
                 if (!translations.Any())
                 {
-                    throw new TableTranslatorException(string.Format("No translation was found in translation profile '{0}' for type of '{1}'.", new T().ProfileName, typeof(K).FullName));
+                    throw new TableTranslatorException(
+                        $"No translation was found in translation profile '{new T().ProfileName}' for type of '{typeof (K).FullName}'.");
                 }
                 translation = translations.Single();
             }
@@ -190,7 +192,8 @@ namespace TableTranslator.Stores
                 translation = this.GetProfileTranslation<T, K, InitializedTranslation>(translationName);
                 if (translation == null)
                 {
-                    throw new TableTranslatorException(string.Format("No translation named '{0}' was found in translation profile '{1}' for type of '{2}'.", translationName, new T().ProfileName, typeof(K).FullName));
+                    throw new TableTranslatorException(
+                        $"No translation named '{translationName}' was found in translation profile '{new T().ProfileName}' for type of '{typeof (K).FullName}'.");
                 }
             }
             return translation;
